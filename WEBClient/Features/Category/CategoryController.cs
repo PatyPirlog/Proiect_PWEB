@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Proiect_PWEB.Api.Features.Category.AddCategory;
+using Proiect_PWEB.Api.Features.Category.GetAllCategories;
 using System.Net;
 
 namespace Proiect_PWEB.Api.Features.Category
@@ -9,10 +10,12 @@ namespace Proiect_PWEB.Api.Features.Category
     public class CategoryController : ControllerBase
     {
         private readonly IAddCategoryCommandHandler addCategoryCommandHandler;
+        private readonly IGetAllCategoriesQueryHandler getAllCategoriesQueryHandler;
 
-        public CategoryController(IAddCategoryCommandHandler addCategoryCommandHandler)
+        public CategoryController(IAddCategoryCommandHandler addCategoryCommandHandler, IGetAllCategoriesQueryHandler getAllCategoriesQueryHandler)
         {
             this.addCategoryCommandHandler = addCategoryCommandHandler;
+            this.getAllCategoriesQueryHandler = getAllCategoriesQueryHandler;
         }
 
         [HttpPost("addCategory")]
@@ -22,6 +25,14 @@ namespace Proiect_PWEB.Api.Features.Category
             await addCategoryCommandHandler.HandleAsync(command, cancellationToken);
 
             return StatusCode((int)HttpStatusCode.Created);
+        }
+
+        [HttpGet("getAllCategories")]
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAllCategories(CancellationToken cancellationToken)
+        {
+            var categories = await getAllCategoriesQueryHandler.HandleAsync(cancellationToken);
+
+            return Ok(categories);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Proiect_PWEB.Infrastructure.Data
 
         public Task SaveAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

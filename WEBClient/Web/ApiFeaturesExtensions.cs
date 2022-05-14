@@ -1,4 +1,6 @@
-﻿using Proiect_PWEB.Api.Features.Request;
+﻿using Proiect_PWEB.Api.Features.Category;
+using Proiect_PWEB.Api.Features.Country;
+using Proiect_PWEB.Api.Features.Request;
 using Proiect_PWEB.Api.Features.Subscription;
 using Proiect_PWEB.Api.Features.User;
 
@@ -17,8 +19,11 @@ namespace Proiect_PWEB.Api.Web
             // Add Request Handlers
             services.AddRequestHandlers();
 
-            // Add Metrics Handlers
-            //services.AddMetricsHandlers();
+            // Add Categories Handlers
+            services.AddCategoriesHandlers();
+
+            // Add Countries Handlers
+            services.AddCountriesHandlers();
         }
     }
 }

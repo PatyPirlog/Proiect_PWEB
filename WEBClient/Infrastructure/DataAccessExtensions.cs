@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Proiect_PWEB.Core.Domain.CategoryDomain;
+using Proiect_PWEB.Core.Domain.CountryDomain;
 using Proiect_PWEB.Core.Domain.RequestDomain;
 using Proiect_PWEB.Core.Domain.SubscriptionDomain;
 using Proiect_PWEB.Core.Domain.UserDomain;
@@ -27,6 +28,7 @@ namespace Proiect_PWEB.Api.Infrastructure
             services.AddTransient<ISubscriptionRepository, SubscriptionRepository>();
             services.AddTransient<IRequestRepository, RequestRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ICountryRepository, CountryRepository>();
         }
     }
 }

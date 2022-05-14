@@ -20,11 +20,14 @@ namespace Proiect_PWEB.Infrastructure.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SubscriptionConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(RequestConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CountryConfiguration).Assembly);
         }
 
         public DbSet<User> User => Set<User>();
         public DbSet<Subscription> Subscription => Set<Subscription>();
         public DbSet<Request> Request => Set<Request>();
         public DbSet<Category> Category => Set<Category>();
+        public DbSet<Country> Country => Set<Country>();
     }
 }

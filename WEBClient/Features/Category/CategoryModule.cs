@@ -1,12 +1,14 @@
 ﻿using Proiect_PWEB.Api.Features.Category.AddCategory;
+using Proiect_PWEB.Api.Features.Category.GetAllCategories;
 
 namespace Proiect_PWEB.Api.Features.Category
 {
     public static class CategoryModule
     {
-        public static void AddCategoryHandlers(this IServiceCollection services)
+        public static void AddCategoriesHandlers(this IServiceCollection services)
         {
             services.AddTransient<IAddCategoryCommandHandler, AddCategoryCommandHandler>();
+            services.AddTransient<IGetAllCategoriesQueryHandler, GetAllCategoriesQueryHandler>();
         }
     }
 }
