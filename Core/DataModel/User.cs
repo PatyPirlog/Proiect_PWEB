@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proiect_PWEB.Core.Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace Proiect_PWEB.Core
         public string Surname { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public int Role { get; set; }
+        public int Role { get; set; } = (int)RoleType.General;
 
         public User(string name, string surname, string email, string phone, int role)
         {
@@ -21,6 +22,15 @@ namespace Proiect_PWEB.Core
             this.Email = email;
             this.Phone = phone;
             this.Role = role;
+        }
+
+        public User(string name, string surname, string email, string phone)
+        {
+            this.Name = name;
+            this.Surname = surname;
+            this.Email = email;
+            this.Phone = phone;
+            //this.Role = role;
         }
 
         public virtual ICollection<Request> Request { get; set; } = new List<Request>();

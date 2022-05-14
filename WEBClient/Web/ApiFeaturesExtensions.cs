@@ -1,4 +1,6 @@
-﻿using Proiect_PWEB.Api.Features.User;
+﻿using Proiect_PWEB.Api.Features.Request;
+using Proiect_PWEB.Api.Features.Subscription;
+using Proiect_PWEB.Api.Features.User;
 
 namespace Proiect_PWEB.Api.Web
 {
@@ -9,11 +11,11 @@ namespace Proiect_PWEB.Api.Web
             // Add User Handlers
             services.AddUserHandlers();
 
-            // Add Profile Handlers
-            //services.AddProfilesHandlers();
+            // Add Subscription Handlers
+            services.AddSubscriptionHandlers();
 
-            // Add Rentals Handlers
-            //services.AddRentalsHandlers();
+            // Add Request Handlers
+            services.AddRequestHandlers();
 
             // Add Metrics Handlers
             //services.AddMetricsHandlers();

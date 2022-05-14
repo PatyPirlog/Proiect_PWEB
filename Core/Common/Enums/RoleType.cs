@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proiect_PWEB.Core.Common.Enums
 {
-    public enum Role
+    public enum RoleType
     {
         Admin = 1,
         General = 2

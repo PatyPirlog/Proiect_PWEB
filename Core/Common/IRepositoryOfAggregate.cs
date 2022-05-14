@@ -11,7 +11,7 @@ namespace Proiect_PWEB.Core
         where TAggregateCreateCommand : ICreateAggregateCommand
     {
         Task AddAsync(TAggregateCreateCommand command, CancellationToken cancellationToken);
-        Task<DomainOfAggregate<TAggregate>?> GetAsync(int aggregateId, CancellationToken cancellationToken);
+        Task<DomainOfAggregate<TAggregate>?> GetByIdAsync(Guid aggregateId, CancellationToken cancellationToken);
         Task SaveAsync(CancellationToken cancellationToken);
     }
 }
