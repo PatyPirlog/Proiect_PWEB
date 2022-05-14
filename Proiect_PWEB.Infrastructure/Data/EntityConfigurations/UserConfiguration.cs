@@ -10,11 +10,6 @@ namespace Proiect_PWEB.Infrastructure
     {
         public override void Configure(EntityTypeBuilder<User> builder)
         {
-            //builder.Property(x => x.Name).IsRequired();
-            //builder.Property(x => x.Surname).IsRequired();
-            //builder.Property(x => x.Email).IsRequired();
-            //builder.Property(x => x.Phone).IsRequired();
-
             //builder.Property(e => e.Id).HasDefaultValueSql("(newid())");
             //builder.Property(e => e.IsDeleted).HasDefaultValue(false);
 
@@ -33,6 +28,8 @@ namespace Proiect_PWEB.Infrastructure
             builder.Property(e => e.Surname)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            builder.Property(e => e.Role).HasDefaultValueSql("((2))");
 
             base.Configure(builder);
             //Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;

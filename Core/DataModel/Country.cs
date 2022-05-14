@@ -16,5 +16,6 @@ namespace Proiect_PWEB.Core
         }
 
         public virtual ICollection<Request> Request { get; set; } = new List<Request>();
+        public virtual ICollection<Subscription> Subscription { get; set; } = new List<Subscription>();
     }
 }

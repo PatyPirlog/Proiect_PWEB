@@ -12,15 +12,18 @@ namespace Proiect_PWEB.Core
         public string Surname { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public int Role { get; set; }
 
-        public User(string name, string surname, string email, string phone)
+        public User(string name, string surname, string email, string phone, int role)
         {
             this.Name = name;
             this.Surname = surname;
             this.Email = email;
             this.Phone = phone;
+            this.Role = role;
         }
 
         public virtual ICollection<Request> Request { get; set; } = new List<Request>();
+        public virtual ICollection<Subscription> Subscription { get; set; } = new List<Subscription>();
     }
 }
