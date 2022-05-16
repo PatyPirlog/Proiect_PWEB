@@ -8,6 +8,8 @@ namespace Proiect_PWEB.Core.Domain.SubscriptionDomain
 {
     public interface ISubscriptionRepository : IRepositoryOfAggregate<Subscription, InsertSubscriptionCommand>
     {
-        public Task DeleteSubscriptionAsync(Subscription model, CancellationToken cancellationToken);
+        public Task DeleteSubscriptionAsync(Guid id, CancellationToken cancellationToken);
+
+        public Task AddMultipleAsync(List<InsertSubscriptionCommand> commands, CancellationToken cancellationToken);
     }
 }

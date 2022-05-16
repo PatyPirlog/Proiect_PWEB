@@ -1,4 +1,6 @@
-﻿using Proiect_PWEB.Api.Features.Subscription.AddSubscription;
+﻿using Proiect_PWEB.Api.Features.Subscription.AddMultipleSubscriptions;
+using Proiect_PWEB.Api.Features.Subscription.AddSubscription;
+using Proiect_PWEB.Api.Features.Subscription.DeleteSubscription;
 using Proiect_PWEB.Api.Features.Subscription.GetAllSubscriptionsForUser;
 
 namespace Proiect_PWEB.Api.Features.Subscription
@@ -9,6 +11,8 @@ namespace Proiect_PWEB.Api.Features.Subscription
         {
             services.AddTransient<IAddSubscriptionCommandHandler, AddSubscriptionCommandHandler>();
             services.AddTransient<IGetAllSubscriptionsForUserQueryHandler, GetAllSubscriptionsForUserQueryHandler>();
+            services.AddTransient<IAddMultipleSubscriptionsHandler, AddMultipleSubscriptionsHandler>();
+            services.AddTransient<IDeleteSubscriptionHandler, DeleteSubscriptionHandler>();
         }
     }
 }

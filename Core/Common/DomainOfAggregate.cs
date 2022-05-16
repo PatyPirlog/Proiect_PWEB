@@ -14,5 +14,7 @@ namespace Proiect_PWEB.Core
         {
             this.aggregate = aggregate;
         }
+
+        public void SoftDeleteEntity() => aggregate.IsDeleted = true;
     }
 }

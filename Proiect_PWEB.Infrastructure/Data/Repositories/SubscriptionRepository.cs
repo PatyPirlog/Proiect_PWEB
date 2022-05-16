@@ -1,4 +1,5 @@
-﻿using Proiect_PWEB.Core;
+﻿using Microsoft.EntityFrameworkCore;
+using Proiect_PWEB.Core;
 using Proiect_PWEB.Core.Domain.SubscriptionDomain;
 using System.Linq;
 
@@ -22,14 +23,33 @@ namespace Proiect_PWEB.Infrastructure.Data.Repositories
             await SaveAsync(cancellationToken);
         }
 
-        public Task DeleteSubscriptionAsync(Subscription model, CancellationToken cancellationToken)
+        public async Task AddMultipleAsync(List<InsertSubscriptionCommand> commands, CancellationToken cancellationToken)
+        {
+            foreach (var command in commands)
+            {
+                var subscription = command.Description is null ? new Subscription(command.UserId, command.CountryId) :
+                                    new Subscription(command.UserId, command.CountryId, command.Description);
+
+                await _context.Subscription.AddAsync(subscription, cancellationToken);
+                
+            }
+            await SaveAsync(cancellationToken);
+        }
+
+        public async Task DeleteSubscriptionAsync(Guid id, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task<DomainOfAggregate<Subscription>?> GetByIdAsync(Guid aggregateId, CancellationToken cancellationToken)
+        public async Task<DomainOfAggregate<Subscription>?> GetByIdAsync(Guid aggregateId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var subscription = await _context.Subscription.FirstOrDefaultAsync(subscription => subscription.Id == aggregateId, cancellationToken);
+
+            if (subscription == null)
+                return null;
+
+            return new SubscriptionDomain(subscription);
+
         }
 
         public Task SaveAsync(CancellationToken cancellationToken) => _context.SaveChangesAsync(cancellationToken);
