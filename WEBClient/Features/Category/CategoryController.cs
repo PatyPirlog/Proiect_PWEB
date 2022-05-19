@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Proiect_PWEB.Api.Features.Category.AddCategory;
 using Proiect_PWEB.Api.Features.Category.GetAllCategories;
 using System.Net;
@@ -19,7 +20,7 @@ namespace Proiect_PWEB.Api.Features.Category
         }
 
         [HttpPost("addCategory")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> AddCategoryAsync([FromBody] AddCategoryCommand command, CancellationToken cancellationToken)
         {
             await addCategoryCommandHandler.HandleAsync(command, cancellationToken);
@@ -28,6 +29,7 @@ namespace Proiect_PWEB.Api.Features.Category
         }
 
         [HttpGet("getAllCategories")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAllCategories(CancellationToken cancellationToken)
         {
             var categories = await getAllCategoriesQueryHandler.HandleAsync(cancellationToken);

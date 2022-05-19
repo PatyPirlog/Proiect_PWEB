@@ -10,30 +10,30 @@ namespace Proiect_PWEB.Api.Web
             {
                 config.SwaggerDoc("v1", new OpenApiInfo { Title = "Book Library", Version = "v1" });
 
-                //config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                //{
-                //    Name = "Authorization",
-                //    Type = SecuritySchemeType.Http,
-                //    Scheme = "Bearer",
-                //    BearerFormat = "JWT",
-                //    In = ParameterLocation.Header,
-                //    Description = "JWT Authorization header using Bearer Token."
-                //});
+                config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using Bearer Token."
+                });
 
-                //config.AddSecurityRequirement(new OpenApiSecurityRequirement
-                //{
-                //    {
-                //        new OpenApiSecurityScheme
-                //        {
-                //            Reference = new OpenApiReference
-                //            {
-                //                Type = ReferenceType.SecurityScheme,
-                //                Id = "Bearer"
-                //            }
-                //        },
-                //        new string[] { }
-                //    }
-                //});
+                config.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
             });
         }
     }

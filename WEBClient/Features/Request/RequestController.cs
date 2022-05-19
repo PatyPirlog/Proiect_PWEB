@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Proiect_PWEB.Api.Features.Request.AddRequest;
 using Proiect_PWEB.Api.Features.Request.DeleteRequest;
 using Proiect_PWEB.Api.Features.Request.GetAllRequests;
@@ -34,7 +35,7 @@ namespace Proiect_PWEB.Api.Features.Request
     }
 
         [HttpPost("addRequest")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> AddRequestAsync([FromBody] AddRequestCommand command, CancellationToken cancellationToken)
         {
             if(command == null)
@@ -46,6 +47,7 @@ namespace Proiect_PWEB.Api.Features.Request
         }
 
         [HttpGet("getAllRequests")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<RequestDTO>>> GetAllRequestsAsync(CancellationToken cancellationToken)
         {
             var requests = await getAllRequestsQueryHandler.HandleAsync(cancellationToken);
@@ -54,6 +56,7 @@ namespace Proiect_PWEB.Api.Features.Request
         }
 
         [HttpGet("getAllRequestsForUser")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<RequestDTO>>> GetRequestsForUserAsync(Guid id, CancellationToken cancellationToken)
         {
             var requests = await getAllRequestsForUserQueryHandler.HandleAsync(id, cancellationToken);
@@ -62,6 +65,7 @@ namespace Proiect_PWEB.Api.Features.Request
         }
 
         [HttpGet("getRequestDetails")]
+        [Authorize]
         public async Task<ActionResult<RequestWithDetailsDTO>> GetAllRequestsAsync(Guid id, CancellationToken cancellationToken)
         {
             var request = await getRequestQueryHandler.HandleAsync(id, cancellationToken);
@@ -70,6 +74,7 @@ namespace Proiect_PWEB.Api.Features.Request
         }
 
         [HttpDelete("deleteRequest")]
+        [Authorize]
         public async Task<IActionResult> DeleteRequestAsync([FromBody] Guid id, CancellationToken cancellationToken)
         {
             await deleteRequestCommandHandler.HandleAsync(id, cancellationToken);

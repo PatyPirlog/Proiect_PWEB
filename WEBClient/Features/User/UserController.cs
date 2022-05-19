@@ -17,7 +17,7 @@ namespace Proiect_PWEB.Api.Features.User
         }
 
         [HttpPost("addUser")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> AddUserAsync([FromBody]AddUserCommand command, CancellationToken cancellationToken)
         {
             await addUserCommandHandler.HandleAsync(command, cancellationToken);

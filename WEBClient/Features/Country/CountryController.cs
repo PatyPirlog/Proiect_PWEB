@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Proiect_PWEB.Api.Features.Country.GetAllCountries;
 using Proiect_PWEB.Api.Features.Country.GetAvailableCountriesForUser;
 
@@ -19,6 +20,7 @@ namespace Proiect_PWEB.Api.Features.Country
     }
 
         [HttpGet("getAllCountries")]
+        [Authorize]
         public async Task<IActionResult> GetAllCountriesAsync(CancellationToken cancellationToken)
         {
             var countries = await getAllCountriesQueryHandler.HandleAsync(cancellationToken);
@@ -27,6 +29,7 @@ namespace Proiect_PWEB.Api.Features.Country
         }
 
         [HttpGet("getAvailableCountriesForUser")]
+        [Authorize]
         public async Task<IActionResult> GetAvailableCountriesForUserAsync(Guid id, CancellationToken cancellationToken)
         {
             var countries = await getAvailableCountriesForUserQueryHandler.HandleAsync(id, cancellationToken);

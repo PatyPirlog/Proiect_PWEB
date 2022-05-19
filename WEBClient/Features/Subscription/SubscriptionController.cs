@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Proiect_PWEB.Api.Features.Subscription.AddMultipleSubscriptions;
 using Proiect_PWEB.Api.Features.Subscription.AddSubscription;
 using Proiect_PWEB.Api.Features.Subscription.DeleteSubscription;
@@ -29,6 +30,7 @@ namespace Proiect_PWEB.Api.Features.Subscription
         }
 
         [HttpPost("addSubscription")]
+        [Authorize]
         public async Task<IActionResult> AddSubscriptionAsync([FromBody] AddSubscriptionCommand command, CancellationToken cancellationToken)
         {
             await addSubscriptionCommandHandler.HandleAsync(command, cancellationToken);
@@ -37,6 +39,7 @@ namespace Proiect_PWEB.Api.Features.Subscription
         }
 
         [HttpGet("getAllSubscriptionsForUser")]
+        [Authorize]
         public async Task<IActionResult> GetAllSubscriptionsForUser(Guid id, CancellationToken cancellationToken)
         {
             var subscriptions = await getAllSubscriptionsForUserQueryHandler.HandleAsync(id, cancellationToken);
@@ -45,6 +48,7 @@ namespace Proiect_PWEB.Api.Features.Subscription
         }
 
         [HttpPost("addMultipleSubscriptions")]
+        [Authorize]
         public async Task<IActionResult> AddMultipleSubscriptions([FromBody] List<AddSubscriptionCommand> commands, CancellationToken cancellationToken)
         {
             if (commands == null)
@@ -56,6 +60,7 @@ namespace Proiect_PWEB.Api.Features.Subscription
         }
 
         [HttpPost("deleteSubscription")]
+        [Authorize]
         public async Task<IActionResult> DeleteSubscription(Guid id, CancellationToken cancellationToken)
         {
             await deleteSubscriptionHandler.HandleAsync(id, cancellationToken);

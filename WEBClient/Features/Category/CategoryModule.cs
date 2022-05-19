@@ -1,4 +1,5 @@
 ﻿using Proiect_PWEB.Api.Features.Category.AddCategory;
+using Proiect_PWEB.Api.Features.Category.DeleteCategory;
 using Proiect_PWEB.Api.Features.Category.GetAllCategories;
 
 namespace Proiect_PWEB.Api.Features.Category
@@ -9,6 +10,7 @@ namespace Proiect_PWEB.Api.Features.Category
         {
             services.AddTransient<IAddCategoryCommandHandler, AddCategoryCommandHandler>();
             services.AddTransient<IGetAllCategoriesQueryHandler, GetAllCategoriesQueryHandler>();
+            services.AddTransient<IDeleteCategoryHandler, DeleteCategoryHandler>();
         }
     }
 }

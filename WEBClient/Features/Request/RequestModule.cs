@@ -1,4 +1,5 @@
 ﻿using Proiect_PWEB.Api.Features.Request.AddRequest;
+using Proiect_PWEB.Api.Features.Request.DeleteRequest;
 using Proiect_PWEB.Api.Features.Request.GetAllRequests;
 using Proiect_PWEB.Api.Features.Request.GetRequest;
 using Proiect_PWEB.Api.Features.Request.GetRequestsForUser;
@@ -13,6 +14,7 @@ namespace Proiect_PWEB.Api.Features.Request
             services.AddTransient<IGetAllRequestsQueryHandler, GetAllRequestsQueryHandler>();
             services.AddTransient<IGetRequestQueryHandler, GetRequestQueryHandler>();
             services.AddTransient<IGetRequestsForUserQueryHandler, GetRequestsForUserQueryHandler>();
+            services.AddTransient<IDeleteRequestCommandHandler, DeleteRequestCommandHandler>();
         }
     }
 }
