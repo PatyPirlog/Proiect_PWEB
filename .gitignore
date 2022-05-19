@@ -362,6 +362,3 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# Node.js Tools for Visual Studio
-.ntvs_analysis.dat
-node_modules/
