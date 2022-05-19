@@ -2,6 +2,7 @@
 using Proiect_PWEB.Core;
 using Proiect_PWEB.Core.Domain.SubscriptionDomain;
 using System.Linq;
+using System.Text;
 
 namespace Proiect_PWEB.Infrastructure.Data.Repositories
 {
@@ -25,20 +26,38 @@ namespace Proiect_PWEB.Infrastructure.Data.Repositories
 
         public async Task AddMultipleAsync(List<InsertSubscriptionCommand> commands, CancellationToken cancellationToken)
         {
+            StringBuilder sb = new StringBuilder("[SUBSCRIBER] ");
+
             foreach (var command in commands)
             {
                 var subscription = command.Description is null ? new Subscription(command.UserId, command.CountryId) :
                                     new Subscription(command.UserId, command.CountryId, command.Description);
 
                 await _context.Subscription.AddAsync(subscription, cancellationToken);
+                var countryName = _context.Country
+                    .Where(country => country.Id == command.CountryId)
+                    .Select(country => country.Name)
+                    .ToString();
+
+                sb.Append($"{countryName};");
                 
             }
+            sb.Remove(sb.Length - 1, 1);
+
             await SaveAsync(cancellationToken);
+            Console.Out.WriteLine(sb);
         }
 
         public async Task DeleteSubscriptionAsync(Guid id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var subscription = await _context.Subscription
+                   .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+            if (subscription != null)
+            {
+                _context.Subscription.Remove(subscription);
+            }
+
         }
 
         public async Task<DomainOfAggregate<Subscription>?> GetByIdAsync(Guid aggregateId, CancellationToken cancellationToken)

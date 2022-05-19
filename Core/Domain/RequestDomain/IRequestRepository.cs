@@ -8,6 +8,6 @@ namespace Proiect_PWEB.Core.Domain.RequestDomain
 {
     public interface IRequestRepository : IRepositoryOfAggregate<Request, InsertRequestCommand>
     {
-        public Task DeleteUserAsync(Request model, CancellationToken cancellationToken);
+        public Task DeleteRequestAsync(Guid id, CancellationToken cancellationToken);
     }
 }

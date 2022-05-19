@@ -14,6 +14,7 @@ namespace Proiect_PWEB.Api.Features.Subscription.AddMultipleSubscriptions
 
         public async Task HandleAsync(List<AddSubscriptionCommand> commands, CancellationToken cancellationToken)
         {
+            
             var subscriptions = commands.Select(command => new InsertSubscriptionCommand(
                 command.Description,
                 command.UserId,

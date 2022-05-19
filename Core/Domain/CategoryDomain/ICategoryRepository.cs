@@ -8,6 +8,6 @@ namespace Proiect_PWEB.Core.Domain.CategoryDomain
 {
     public interface ICategoryRepository : IRepositoryOfAggregate<Category, InsertCategoryCommand>
     {
-        public Task DeleteUserAsync(Category model, CancellationToken cancellationToken);
+        public Task DeleteCategoryAsync(Guid id, CancellationToken cancellationToken);
     }
 }

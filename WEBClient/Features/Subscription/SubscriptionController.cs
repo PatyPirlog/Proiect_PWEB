@@ -47,6 +47,9 @@ namespace Proiect_PWEB.Api.Features.Subscription
         [HttpPost("addMultipleSubscriptions")]
         public async Task<IActionResult> AddMultipleSubscriptions([FromBody] List<AddSubscriptionCommand> commands, CancellationToken cancellationToken)
         {
+            if (commands == null)
+                return StatusCode((int)HttpStatusCode.BadRequest);
+
             await addMultiplesSubscriptionsHandler.HandleAsync(commands, cancellationToken);
 
             return StatusCode((int)HttpStatusCode.Created);

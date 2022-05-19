@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Proiect_PWEB.Api.Features.Request.AddRequest;
+using Proiect_PWEB.Api.Features.Request.DeleteRequest;
 using Proiect_PWEB.Api.Features.Request.GetAllRequests;
 using Proiect_PWEB.Api.Features.Request.GetRequest;
 using Proiect_PWEB.Api.Features.Request.GetRequestsForUser;
@@ -15,24 +16,30 @@ namespace Proiect_PWEB.Api.Features.Request
         private readonly IGetAllRequestsQueryHandler getAllRequestsQueryHandler;
         private readonly IGetRequestQueryHandler getRequestQueryHandler;
         private readonly IGetRequestsForUserQueryHandler getAllRequestsForUserQueryHandler;
+        private readonly IDeleteRequestCommandHandler deleteRequestCommandHandler;
 
         public RequestController(
             IAddRequestCommandHandler addRequestCommandHandler,
             IGetAllRequestsQueryHandler getAllRequestsQueryHandler,
             IGetRequestQueryHandler getRequestQueryHandler,
-            IGetRequestsForUserQueryHandler getAllRequestsForUserQueryHandler
+            IGetRequestsForUserQueryHandler getAllRequestsForUserQueryHandler,
+            IDeleteRequestCommandHandler deleteRequestCommandHandler
             )
         {
             this.addRequestCommandHandler = addRequestCommandHandler;
             this.getAllRequestsQueryHandler = getAllRequestsQueryHandler;
             this.getRequestQueryHandler = getRequestQueryHandler;
             this.getAllRequestsForUserQueryHandler = getAllRequestsForUserQueryHandler;
+            this.deleteRequestCommandHandler = deleteRequestCommandHandler;
     }
 
         [HttpPost("addRequest")]
         //[Authorize]
         public async Task<IActionResult> AddRequestAsync([FromBody] AddRequestCommand command, CancellationToken cancellationToken)
         {
+            if(command == null)
+                return StatusCode((int)HttpStatusCode.BadRequest);
+
             await addRequestCommandHandler.HandleAsync(command, cancellationToken);
 
             return StatusCode((int)HttpStatusCode.Created);
@@ -60,6 +67,14 @@ namespace Proiect_PWEB.Api.Features.Request
             var request = await getRequestQueryHandler.HandleAsync(id, cancellationToken);
 
             return Ok(request);
+        }
+
+        [HttpDelete("deleteRequest")]
+        public async Task<IActionResult> DeleteRequestAsync([FromBody] Guid id, CancellationToken cancellationToken)
+        {
+            await deleteRequestCommandHandler.HandleAsync(id, cancellationToken);
+
+            return NoContent();
         }
     }
 }

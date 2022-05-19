@@ -23,6 +23,7 @@ namespace Proiect_PWEB.Api.Features.Subscription.DeleteSubscription
 
             subscription.SoftDeleteEntity();
 
+            await subscriptionRepository.DeleteSubscriptionAsync(id, cancellationToken);
             await subscriptionRepository.SaveAsync(cancellationToken);
         }
     }
