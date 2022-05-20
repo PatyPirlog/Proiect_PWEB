@@ -5,7 +5,10 @@ services:
     image: "mcr.microsoft.com/mssql/server:2019-latest"
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "Gigel12345"
+      SA_PASSWORD: Gigel12345
+    build:
+      context: .
+      dockerfile: Dockerfile.bd
     ports:
       - "1433:1433"
 
@@ -13,6 +16,7 @@ services:
     image: backend/v1
     build:
       context: .
-      dockerfile: WEBClient\Dockerfile
+      dockerfile: Dockerfile.backend
+    command: ["/delay.sh", "db:1433", "-t", "120", "--", "dotnet", "Proiect_PWEB.Api.dll"]
     depends_on:
       - db
