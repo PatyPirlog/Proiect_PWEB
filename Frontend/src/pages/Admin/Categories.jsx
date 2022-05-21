@@ -51,7 +51,7 @@ const Categories = () => {
 	const onDelete = async (category) => {
 		const accessToken = await getAccessTokenSilently();
 		axiosInstance
-			.post(routes.subscription.deleteSubscription(category.id), {
+			.post(routes.category.delete(category.id), {
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},

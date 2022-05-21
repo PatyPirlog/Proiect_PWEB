@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const RequestForm = () => {
   const userId = "A7C99B00-EF19-4A22-902C-09D312ACA551" //@todo
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, user } = useAuth0();
   const navigate = useNavigate();
 
   const [countries, setCountries] = useState([]);
@@ -49,8 +49,9 @@ const RequestForm = () => {
     const apiPayload = {}
     let selectedIndex;
     const accessToken = await getAccessTokenSilently();
+    const identityId = user["sub"].split("|")[1];
 
-    apiPayload.userId = userId;
+    apiPayload.identityId = identityId;
     apiPayload.title = document.getElementById("title").value;
     apiPayload.name = document.getElementById("name").value;
     apiPayload.surname = document.getElementById("surname").value;

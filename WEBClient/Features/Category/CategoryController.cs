@@ -35,7 +35,7 @@ namespace Proiect_PWEB.Api.Features.Category
 
         [HttpGet("getAllCategories")]
         //[Authorize]
-        [Authorize("AdminAccess")]
+        //[Authorize("AdminAccess")]
         public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAllCategories(CancellationToken cancellationToken)
         {
             var categories = await getAllCategoriesQueryHandler.HandleAsync(cancellationToken);
@@ -43,9 +43,9 @@ namespace Proiect_PWEB.Api.Features.Category
             return Ok(categories);
         }
 
-        [HttpDelete("deleteCategory")]
+        [HttpPost("deleteCategory")]
         [Authorize("AdminAccess")]
-        public async Task<IActionResult> DeleteCategory([FromBody] Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteCategory([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             await deleteCategoryHandler.HandleAsync(id, cancellationToken);
 

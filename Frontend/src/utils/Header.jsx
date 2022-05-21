@@ -20,6 +20,8 @@ const Header = () => {
 
 	useEffect(() => {
 		getPermissions();
+		// if (permissions[0] === "admin")
+		//   navigate('/categories');
 	}, []);
 
 	console.log(permissions);
