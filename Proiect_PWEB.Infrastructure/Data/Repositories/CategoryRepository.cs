@@ -34,9 +34,15 @@ namespace Proiect_PWEB.Infrastructure.Data
                 _context.Category.Remove(category);
         }
 
-        public Task<DomainOfAggregate<Category>?> GetByIdAsync(Guid aggregateId, CancellationToken cancellationToken)
+        public async Task<DomainOfAggregate<Category>?> GetByIdAsync(Guid aggregateId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            var category = await _context.Category.FirstOrDefaultAsync(category => category.Id == aggregateId, cancellationToken);
+
+            if (category == null)
+                return null;
+
+            return new CategoryDomain(category);
         }
 
         public Task SaveAsync(CancellationToken cancellationToken)

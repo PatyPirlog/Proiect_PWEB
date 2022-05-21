@@ -18,12 +18,12 @@ const Header = () => {
 		console.log(data);
 	}, [getAccessTokenSilently]);
 
-	// useEffect(() => {
-	//   getPermissions();
-	//   if (permissions[0] === "admin")
-	//     navigate('/categories');
+	useEffect(() => {
+	  getPermissions();
+	  // if (permissions[0] === "admin")
+	  //   navigate('/categories');
 
-	// }, []);
+	}, []);
 
 	console.log(permissions);
 	return (

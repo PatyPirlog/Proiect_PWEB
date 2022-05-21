@@ -8,7 +8,8 @@ import { authSettings } from "./AuthSettings";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <>
      <Auth0Provider
       domain={authSettings.domain}
       clientId={authSettings.clientId}
@@ -17,7 +18,8 @@ root.render(
     >
       <App />
     </Auth0Provider>
-  </React.StrictMode>
+    </>
+  // </React.StrictMode>
 
 //document.getElementById("root")
 );
