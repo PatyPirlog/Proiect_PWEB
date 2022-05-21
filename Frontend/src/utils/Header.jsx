@@ -18,12 +18,9 @@ const Header = () => {
 		console.log(data);
 	}, [getAccessTokenSilently]);
 
-	// useEffect(() => {
-	//   getPermissions();
-	//   if (permissions[0] === "admin")
-	//     navigate('/categories');
-
-	// }, []);
+	useEffect(() => {
+		getPermissions();
+	}, []);
 
 	console.log(permissions);
 	return (
