@@ -20,32 +20,24 @@ namespace Proiect_PWEB.Infrastructure.Data.Repositories
 
         public async Task AddAsync(InsertRequestCommand command, CancellationToken cancellationToken)
         {
+            var userId = await _context.User.Where(user => user.IdentityId == command.IdentityId)
+                .Select(user => user.Id)
+                .FirstOrDefaultAsync(cancellationToken);
+
             var request = new Request(
-                command.UserId,
+                userId,
                 command.CategoryId,
                 command.CountryId,
                 command.Title,
                 command.Address,
-                command.Description
+                command.Description,
+                command.Name,
+                command.Surname,
+                command.Phone
                 );
 
             await _context.Request.AddAsync(request, cancellationToken);
-
-            StringBuilder sb = new StringBuilder("[SUBSCRIBER] ");
-
-            var countryName = _context.Country
-                .Where(country => country.Id == command.CountryId)
-                .Select(country => country.Name).ToString();
-            var categoryName = _context.Category
-                .Where(category => category.Id == command.CategoryId)
-                .Select(category => category.Name)
-                .ToString();
-
-            sb.Append($"{countryName};{categoryName}");
-
             await SaveAsync(cancellationToken);
-
-            Console.Out.WriteLine(sb);
         }
 
         public async Task DeleteRequestAsync(Guid id, CancellationToken cancellationToken)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Proiect_PWEB.Api.Authorization;
 using Proiect_PWEB.Api.Features.Subscription.AddMultipleSubscriptions;
 using Proiect_PWEB.Api.Features.Subscription.AddSubscription;
 using Proiect_PWEB.Api.Features.Subscription.DeleteSubscription;
@@ -40,9 +41,16 @@ namespace Proiect_PWEB.Api.Features.Subscription
 
         [HttpGet("getAllSubscriptionsForUser")]
         [Authorize]
-        public async Task<IActionResult> GetAllSubscriptionsForUser(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllSubscriptionsForUser(CancellationToken cancellationToken)
         {
-            var subscriptions = await getAllSubscriptionsForUserQueryHandler.HandleAsync(id, cancellationToken);
+            var identityId = User.GetUserIdentityId();
+
+            if (identityId == null)
+            {
+                return Unauthorized();
+            }
+
+            var subscriptions = await getAllSubscriptionsForUserQueryHandler.HandleAsync(identityId, cancellationToken);
 
             return Ok(subscriptions);
         }

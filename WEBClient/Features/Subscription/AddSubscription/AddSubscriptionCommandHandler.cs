@@ -13,6 +13,6 @@ namespace Proiect_PWEB.Api.Features.Subscription.AddSubscription
 
         public Task HandleAsync(AddSubscriptionCommand command, CancellationToken cancellationToken)
             => subscriptionRepository
-            .AddAsync(new AddSubscriptionCommand(command.Description, command.UserId, command.CountryId), cancellationToken);
+            .AddAsync(new AddSubscriptionCommand(command.IdentityId, command.CountryId), cancellationToken);
     }
 }

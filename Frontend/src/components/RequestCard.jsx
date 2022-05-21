@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { Card, Badge, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import jwt from 'jwt-decode';
 
 const RequestCard = ({
     id,
@@ -11,6 +13,22 @@ const RequestCard = ({
     description
 }) => {
     const navigate = useNavigate();
+
+    const { getAccessTokenSilently } = useAuth0();
+
+  const [permissions, setPermissions] = useState("");
+  
+  const getPermissions = useCallback(async () => {
+    const accessToken = await getAccessTokenSilently();
+    const data = jwt(accessToken);
+    setPermissions(data.permissions);
+    console.log(data);
+
+  }, [getAccessTokenSilently]);
+
+  useEffect(() => {
+    getPermissions()
+  }, []);
     
     const handleClick = (id) => {
         navigate(`/requests/${id}`);
@@ -31,9 +49,13 @@ const RequestCard = ({
                     <Card.Text className="mt-1 mb-1"> Description: {description} </Card.Text>
                 </div>
                 <div className="d-flex align-items-center" >
-                <Button variant="outline-info" size="md" onClick={() => handleClick(id)}>
-                    Help
-                </Button>
+                    {
+                        permissions[0] !== "admin" &&
+                        <Button variant="outline-info" size="md" onClick={() => handleClick(id)}>
+                            Help
+                        </Button>
+                    }
+                
                 </div>
             </div>
         </Card.Body>

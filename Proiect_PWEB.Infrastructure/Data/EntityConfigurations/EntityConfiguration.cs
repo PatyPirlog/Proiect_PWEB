@@ -12,19 +12,6 @@ namespace Proiect_PWEB.Infrastructure.Data.EntityConfigurations
             builder
                 .Property(x => x.Id)
                 .ValueGeneratedOnAdd();
-
-            //builder
-            //    .Property(x => x.IsDeleted)
-            //    .ValueGeneratedOnAdd()
-            //    .HasDefaultValueSql("0");
-
-            //builder
-            //    .Property(x => x.CreatedAt)
-            //    .ValueGeneratedOnAdd();
-
-            //builder
-            //    .Property(x => x.UpdatedAt)
-            //    .ValueGeneratedOnAddOrUpdate();
         }
     }
 }

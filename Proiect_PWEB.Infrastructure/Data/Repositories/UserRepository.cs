@@ -1,4 +1,5 @@
-﻿using Proiect_PWEB.Core;
+﻿using Microsoft.EntityFrameworkCore;
+using Proiect_PWEB.Core;
 using Proiect_PWEB.Core.Domain.UserDomain;
 
 namespace Proiect_PWEB.Infrastructure.Data.Repositories
@@ -14,10 +15,18 @@ namespace Proiect_PWEB.Infrastructure.Data.Repositories
 
         public async Task AddAsync(InsertUserCommand command, CancellationToken cancellationToken)
         {
-            var user = new User(command.Name, command.Surname, command.Email, command.Phone);
+            var user = new User(command.IdentityId, command.Email);
 
-            await _context.User.AddAsync(user, cancellationToken);
-            await SaveAsync(cancellationToken);
+            var userexist = await _context.User
+                .Where(user => user.IdentityId == command.IdentityId)
+                .FirstOrDefaultAsync();
+
+            if (userexist == null)
+            {
+                await _context.User.AddAsync(user, cancellationToken);
+                await SaveAsync(cancellationToken);
+            }
+            
         }
 
         public Task DeleteUserAsync(User model, CancellationToken cancellationToken)

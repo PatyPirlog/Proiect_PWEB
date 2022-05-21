@@ -14,6 +14,17 @@ namespace Proiect_PWEB.Infrastructure.Data.EntityConfigurations
         public override void Configure(EntityTypeBuilder<Request> builder)
         {
             //builder.Property(e => e.Id).HasDefaultValueSql("(newid())");
+            builder.Property(e => e.Name)
+               .IsRequired()
+               .HasMaxLength(100);
+
+            builder.Property(e => e.Phone)
+                .IsRequired()
+                .HasMaxLength(15);
+
+            builder.Property(e => e.Surname)
+                .IsRequired()
+                .HasMaxLength(100);
 
             builder.Property(e => e.Address)
                 .IsRequired()

@@ -2,20 +2,19 @@
 {
     public class RequestWithDetailsDTO : RequestDTO
     {
-        public string UserPhone { get; set; }
         public string UserEmail { get; set; }
         public RequestWithDetailsDTO(Guid id,
-            string userName,
             string categoryName,
             string countryName,
             string title,
             string address,
             string description,
-            string userPhone,
-            string userEmail) 
-            : base(id, userName, categoryName, countryName, title, address, description)
+            string userEmail,
+            string name,
+            string surname,
+            string phone) 
+            : base(id, categoryName, countryName, title, address, description, name, surname, phone)
         {
-            UserPhone = userPhone;
             UserEmail = userEmail;
         }
     }

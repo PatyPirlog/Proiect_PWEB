@@ -21,8 +21,6 @@ namespace Proiect_PWEB.Api.Features.Subscription.DeleteSubscription
                 throw new ApiException(System.Net.HttpStatusCode.NotFound, $"Subscription with id {id} was not found.");
             }
 
-            subscription.SoftDeleteEntity();
-
             await subscriptionRepository.DeleteSubscriptionAsync(id, cancellationToken);
             await subscriptionRepository.SaveAsync(cancellationToken);
         }

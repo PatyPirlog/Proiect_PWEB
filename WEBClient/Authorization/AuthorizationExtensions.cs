@@ -19,7 +19,7 @@ namespace Proiect_PWEB.Api.Authorization
             // Add Authorization configuration
             builder.Services.AddAuthorization(configure =>
             {
-                configure.AddPolicy("AdminAccess", policy => policy.RequireClaim("permissions", "pweb:admin"));
+                configure.AddPolicy("AdminAccess", policy => policy.RequireClaim("permissions", "admin"));
             });
         }
 

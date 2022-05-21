@@ -44,7 +44,7 @@ const SubscriptionModal = ({ modalIsOpen, closeModal }) => {
     const getAllSubscriptions = useCallback(async () => {
       const accessToken = await getAccessTokenSilently();
     axiosInstance
-      .get(routes.subscription.getSubscriptions(userId), {
+      .get(routes.subscription.getSubscriptions, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Proiect_PWEB.Api.Features.User.AddUser;
+using Proiect_PWEB.Api.Features.User.GetUserProfile;
 
 namespace Proiect_PWEB.Api.Features.User
 {
@@ -9,6 +10,7 @@ namespace Proiect_PWEB.Api.Features.User
         public static void AddUserHandlers(this IServiceCollection services)
         {
             services.AddTransient<IAddUserCommandHandler, AddUserCommandHandler>();
+            services.AddTransient<IUserProfileQueryHandler, UserProfileQueryHandler>();
         }
     }
 }

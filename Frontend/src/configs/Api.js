@@ -3,10 +3,11 @@ const routes = {
     request: {
         getAll: "Request/getAllRequests",
         get: (id) => `Request/getRequestDetails?id=${id}`,
-        addRequest: "Request/addRequest"
+        addRequest: "Request/addRequest",
+        getRequestsForUser: "Request/getAllRequestsForUser"
     },
     subscription: {
-        getSubscriptions: (id) => `Subscription/getAllSubscriptionsForUser?id=${id}`,
+        getSubscriptions: "Subscription/getAllSubscriptionsForUser",
         addSubscriptions: 'Subscription/addSubscriptions'
     
     },
@@ -16,6 +17,9 @@ const routes = {
     category: {
         getAll: "Category/getAllCategories"
 
+    },
+    user: {
+        addProfile: "User/addProfile"
     }
 };
 
