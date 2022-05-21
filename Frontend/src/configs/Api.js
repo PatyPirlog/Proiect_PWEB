@@ -17,7 +17,7 @@ const routes = {
     category: {
         getAll: "Category/getAllCategories",
         add: "Category/addCategory",
-        delete: (id) => `Category/deleteCategory?id=${id}`
+        delete: "Category/deleteCategory"
     },
     user: {
         addProfile: "User/addProfile"

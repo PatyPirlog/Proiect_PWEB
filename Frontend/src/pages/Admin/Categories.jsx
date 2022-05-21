@@ -50,8 +50,10 @@ const Categories = () => {
 
 	const onDelete = async (category) => {
 		const accessToken = await getAccessTokenSilently();
+    const apiPayload = {};
+    apiPayload.id = category.id;
 		axiosInstance
-			.post(routes.category.delete(category.id), {
+			.post(routes.category.delete, apiPayload, {
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
@@ -69,7 +71,7 @@ const Categories = () => {
 			.post(routes.category.add, apiPayload, {
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
-				},
+				}        
 			})
 			.then(() => {
 				/** @todo after response?? */
