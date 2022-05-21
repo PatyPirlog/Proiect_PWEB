@@ -39,7 +39,7 @@ const MyRequests = () => {
 
 	return (
 		<Layout>
-			<Container>
+			<Container className="mt-5 mb-5 justify-content-center">
 				{/* The requests list */}
 				{requests.map((request, index) => (
 					<RequestCard
@@ -50,9 +50,10 @@ const MyRequests = () => {
 							countryName,
 							title,
 							description,
-							userName,
+							name,
+							surname,
 							userEmail,
-							userPhone,
+							phone,
 							address,
 						}) => ({
 							id,
@@ -60,9 +61,10 @@ const MyRequests = () => {
 							countryName,
 							title,
 							description,
-							userName,
+							name,
+							surname,
 							userEmail,
-							userPhone,
+							phone,
 							address,
 						}))(request)}
 						onAction={() => {

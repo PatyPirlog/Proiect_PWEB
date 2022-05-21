@@ -9,9 +9,10 @@ const RequestCard = ({
 	countryName,
 	title,
 	description,
-	userName,
+	name,
+	surname,
 	userEmail,
-	userPhone,
+	phone,
 	address,
 	buttonName,
 	onAction,
@@ -32,7 +33,7 @@ const RequestCard = ({
 	}, []);
 
 	return (
-		<Card style={{ width: "100%" }}>
+		<Card style={{ width: "100%" }} className="mb-3 mt-3">
 			<Card.Body>
 				<div className="d-flex justify-content-between">
 					<div>
@@ -51,10 +52,10 @@ const RequestCard = ({
 							{" "}
 							Description: {description}{" "}
 						</Card.Text>
-						{userName && (
+						{name && surname && (
 							<Card.Text className="mt-1 mb-1">
 								{" "}
-								Name: {userName}{" "}
+								Name: {name + " " + surname}{" "}
 							</Card.Text>
 						)}
 						{userEmail && (
@@ -63,10 +64,10 @@ const RequestCard = ({
 								Email: {userEmail}{" "}
 							</Card.Text>
 						)}
-						{userPhone && (
+						{phone && (
 							<Card.Text className="mt-1 mb-1">
 								{" "}
-								Phone: {userPhone}{" "}
+								Phone: {phone}{" "}
 							</Card.Text>
 						)}
 						{address && (

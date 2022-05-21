@@ -55,16 +55,18 @@ const Header = () => {
 								</Nav.Link>
 							</>
 						)}
+						<Nav.Link
+							className="signout"
+							href="/"
+							onClick={() => {
+								logout({
+									returnTo: window.location.origin,
+								});
+							}}
+						>
+							Signout
+						</Nav.Link>
 					</Nav>
-					<Link
-						className="signout"
-						to="/"
-						onClick={() => {
-							logout({ returnTo: window.location.origin });
-						}}
-					>
-						Signout
-					</Link>
 				</Container>
 			</Navbar>
 		</>

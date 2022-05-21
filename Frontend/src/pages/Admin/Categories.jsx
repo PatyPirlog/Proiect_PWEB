@@ -85,8 +85,11 @@ const Categories = () => {
 		<>
 			{permissions[0] === "admin" && (
 				<Layout>
-					<Container>
-						<Card style={{ width: "70%" }}>
+					<Container
+						style={{ width: "40rem" }}
+						className="mt-5 mb-5 justify-content-center"
+					>
+						<Card style={{ width: "100%" }}>
 							<Card.Body>
 								<Card.Title>All categories</Card.Title>
 								<Card.Text>
