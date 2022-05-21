@@ -21,13 +21,14 @@ namespace Proiect_PWEB.Api.Features.Request.GetAllRequests
                 .Include(a => a.Country)
                 .Select(request => new RequestDTO(
                     request.Id,
-                    $"{request.User.Name} {request.User.Surname}",
                     request.Category.Name,
                     request.Country.Name,
                     request.Title,
                     request.Address,
-                    request.Description
-
+                    request.Description,
+                    request.Name,
+                    request.Surname,
+                    request.Phone
                  ))
                 .ToListAsync(cancellationToken);
 

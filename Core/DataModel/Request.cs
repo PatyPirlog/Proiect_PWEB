@@ -14,6 +14,10 @@ namespace Proiect_PWEB.Core
         public string Title { get; set; }
         public string Address { get; set; }
         public string Description { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Phone { get; set; }
+
 
         public Request(
             Guid userId,
@@ -21,7 +25,10 @@ namespace Proiect_PWEB.Core
             Guid countryId,
             string title,
             string address,
-            string description
+            string description,
+            string name,
+            string surname,
+            string phone
             )
         {
             UserId = userId;
@@ -30,6 +37,10 @@ namespace Proiect_PWEB.Core
             Title = title;
             Address = address;
             Description = description;
+            Name = name;
+            Surname = surname;
+            Phone = phone;
+
         }
 
         public virtual Category Category { get; set; } = null!;

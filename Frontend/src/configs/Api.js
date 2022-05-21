@@ -4,13 +4,12 @@ const routes = {
         getAll: "Request/getAllRequests",
         get: (id) => `Request/getRequestDetails?id=${id}`,
         addRequest: "Request/addRequest",
-        getUserRequests: (id) => `Request/getAllRequestsForUser?id=${id}`
+        getRequestsForUser: "Request/getAllRequestsForUser"
     },
     subscription: {
-        getSubscriptions: (id) => `Subscription/getAllSubscriptionsForUser?id=${id}`,
-        deleteSubscription: (id) => `Subscription/deleteSubscription?id=${id}`,
-        addSubscriptions: 'Subscription/addSubscriptions'
-    
+        getSubscriptions: "Subscription/getAllSubscriptionsForUser",
+        addSubscriptions: 'Subscription/addSubscriptions',
+        deleteSubscription: (id) => `Subscription/deleteSubscription?id=${id}`    
     },
     country: {
         getAll: "Country/getAllCountries"
@@ -19,6 +18,9 @@ const routes = {
         getAll: "Category/getAllCategories",
         add: "Category/addCategory",
         delete: (id) => `Category/deleteCategory?id=${id}`
+    },
+    user: {
+        addProfile: "User/addProfile"
     }
 };
 

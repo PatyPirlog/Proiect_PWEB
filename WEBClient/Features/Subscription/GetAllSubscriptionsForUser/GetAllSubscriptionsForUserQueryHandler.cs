@@ -11,12 +11,16 @@ namespace Proiect_PWEB.Api.Features.Subscription.GetAllSubscriptionsForUser
         {
             _context = context;
         }
-        public async Task<IEnumerable<SubscriptionDTO>> HandleAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<IEnumerable<SubscriptionDTO>> HandleAsync(string identityId, CancellationToken cancellationToken)
         {
+            var userId = await _context.User.Where(user => user.IdentityId == identityId)
+                .Select(user => user.Id)
+                .FirstOrDefaultAsync(cancellationToken);
+
             var subscriptionDTOs = await _context.Subscription
                 .AsNoTracking()
                 .Include(a => a.Country)
-                .Where(a => a.UserId == id)
+                .Where(a => a.UserId == userId)
                 .Select(request => new SubscriptionDTO(
                     request.Id,
                     request.Country.Name

@@ -9,28 +9,12 @@ namespace Proiect_PWEB.Core
 {
     public class User : Entity, IAggregateRoot
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public string? IdentityId { get; set; }
         public string Email { get; set; }
-        public string Phone { get; set; }
-        public int Role { get; set; } = (int)RoleType.General;
-
-        public User(string name, string surname, string email, string phone, int role)
+        public User(string identityId, string email)
         {
-            this.Name = name;
-            this.Surname = surname;
+            this.IdentityId = identityId;
             this.Email = email;
-            this.Phone = phone;
-            this.Role = role;
-        }
-
-        public User(string name, string surname, string email, string phone)
-        {
-            this.Name = name;
-            this.Surname = surname;
-            this.Email = email;
-            this.Phone = phone;
-            //this.Role = role;
         }
 
         public virtual ICollection<Request> Request { get; set; } = new List<Request>();

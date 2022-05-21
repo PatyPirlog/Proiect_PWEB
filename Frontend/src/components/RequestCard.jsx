@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { Card, Badge, Button } from "react-bootstrap";
+import { useAuth0 } from "@auth0/auth0-react";
+import jwt from 'jwt-decode';
+
 const RequestCard = ({
     id,
     categoryName, 
@@ -13,6 +16,22 @@ const RequestCard = ({
     buttonName,
     onAction
 }) => {
+
+    const { getAccessTokenSilently } = useAuth0();
+
+  const [permissions, setPermissions] = useState("");
+  
+  const getPermissions = useCallback(async () => {
+    const accessToken = await getAccessTokenSilently();
+    const data = jwt(accessToken);
+    setPermissions(data.permissions);
+    console.log(data);
+
+  }, [getAccessTokenSilently]);
+
+  useEffect(() => {
+    getPermissions()
+  }, []);
 
     return (
         <Card style={{ width: '100%'}}>
@@ -37,9 +56,11 @@ const RequestCard = ({
                 </div>
 
                 <div className="d-flex align-items-center" >
+                    {permissions[0] !== "admin" &&
                     <Button variant="outline-info" size="md" onClick={onAction}>
                         {buttonName}
                     </Button>
+                    }
                 </div>
             </div>
         </Card.Body>

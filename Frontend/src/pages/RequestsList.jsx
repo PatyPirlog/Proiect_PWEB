@@ -7,12 +7,28 @@ import { routes } from "../configs/Api";
 import axiosInstance from "../configs/Axios";
 import SubscriptionModal from "../components/SubscriptionModal";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
+import jwt from 'jwt-decode';
 
 const RequestsList = () => {
   const [requests, setRequests] = useState([]);
   const [openedModal, setOpenedModal] = useState(false);
   const { getAccessTokenSilently } = useAuth0();
+
+  const [permissions, setPermissions] = useState("");
+  const navigate = useNavigate();
+  
+  const getPermissions = useCallback(async () => {
+    const accessToken = await getAccessTokenSilently();
+    const data = jwt(accessToken);
+    setPermissions(data.permissions);
+    console.log(data);
+
+  }, [getAccessTokenSilently]);
+
+  useEffect(() => {
+    getPermissions()
+  }, []);
   
   const getAllRequests = useCallback(async () => {
     const accessToken = await getAccessTokenSilently();
@@ -31,8 +47,6 @@ const RequestsList = () => {
     getAllRequests();
   }, [getAllRequests]);
 
-  
-  const navigate = useNavigate();
   const onHelp = (id) => {
     navigate(`/requests/${id}`);
   };
@@ -46,14 +60,16 @@ const RequestsList = () => {
           }}
           showSubscriptions={true}
         /> 
-        
-        <Container>
-          
+        <Container>   
           {/* The Subscribe location button */}
           <div className="d-flex d-flex flex-row-reverse mt-4 mb-4">
-            <Button variant="outline-info" size="md" onClick={() => setOpenedModal(true)}> 
+            {
+              permissions[0] !== "admin" &&
+              <Button variant="outline-info" size="md" onClick={() => setOpenedModal(true)}> 
               Subscribe location
             </Button>
+            }
+            
           </div>
 
           {/* The requests list */}

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Proiect_PWEB.Api.Features.Category.AddCategory;
+using Proiect_PWEB.Api.Features.Category.DeleteCategory;
 using Proiect_PWEB.Api.Features.Category.GetAllCategories;
 using System.Net;
 
@@ -12,15 +13,19 @@ namespace Proiect_PWEB.Api.Features.Category
     {
         private readonly IAddCategoryCommandHandler addCategoryCommandHandler;
         private readonly IGetAllCategoriesQueryHandler getAllCategoriesQueryHandler;
+        private readonly IDeleteCategoryHandler deleteCategoryHandler;
 
-        public CategoryController(IAddCategoryCommandHandler addCategoryCommandHandler, IGetAllCategoriesQueryHandler getAllCategoriesQueryHandler)
+        public CategoryController(IAddCategoryCommandHandler addCategoryCommandHandler,
+            IGetAllCategoriesQueryHandler getAllCategoriesQueryHandler,
+            IDeleteCategoryHandler deleteCategoryHandler)
         {
             this.addCategoryCommandHandler = addCategoryCommandHandler;
             this.getAllCategoriesQueryHandler = getAllCategoriesQueryHandler;
+            this.deleteCategoryHandler = deleteCategoryHandler;
         }
 
         [HttpPost("addCategory")]
-        [Authorize]
+        [Authorize("AdminAccess")]
         public async Task<IActionResult> AddCategoryAsync([FromBody] AddCategoryCommand command, CancellationToken cancellationToken)
         {
             await addCategoryCommandHandler.HandleAsync(command, cancellationToken);
@@ -29,12 +34,23 @@ namespace Proiect_PWEB.Api.Features.Category
         }
 
         [HttpGet("getAllCategories")]
-        [Authorize]
+        //[Authorize]
+        [Authorize("AdminAccess")]
         public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAllCategories(CancellationToken cancellationToken)
         {
             var categories = await getAllCategoriesQueryHandler.HandleAsync(cancellationToken);
 
             return Ok(categories);
         }
+
+        [HttpDelete("deleteCategory")]
+        [Authorize("AdminAccess")]
+        public async Task<IActionResult> DeleteCategory([FromBody] Guid id, CancellationToken cancellationToken)
+        {
+            await deleteCategoryHandler.HandleAsync(id, cancellationToken);
+
+            return NoContent();
+        }
+        
     }
 }

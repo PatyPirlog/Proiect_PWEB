@@ -12,7 +12,8 @@ namespace Proiect_PWEB.Api.Features.User.AddUser
         }
 
         public Task HandleAsync(AddUserCommand command, CancellationToken cancellationToken)
-            => userRepository.AddAsync(new InsertUserCommand(command.Name, command.Surname, command.Email, command.Phone), cancellationToken);
+            => userRepository.AddAsync(new InsertUserCommand(command.IdentityId, command.Email), cancellationToken);
+
         
     }
 }

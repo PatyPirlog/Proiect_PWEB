@@ -27,14 +27,16 @@ namespace Proiect_PWEB.Api.Features.Request.GetRequest
 
             var requestDTO = new RequestWithDetailsDTO(
                     request.Id,
-                    $"{request.User.Name} {request.User.Surname}",
                     request.Category.Name,
                     request.Country.Name,
                     request.Title,
                     request.Address,
                     request.Description,
-                    request.User.Phone,
-                    request.User.Email);
+                    request.User.Email,
+                    request.Name,
+                    request.Surname,
+                    request.Phone
+                    );
 
             return requestDTO;
         }

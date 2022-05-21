@@ -6,29 +6,35 @@ import { Container } from "react-bootstrap";
 import { routes } from "../../configs/Api";
 import axiosInstance from "../../configs/Axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
 const MyRequests = () => {
-    const userId = "A7C99B00-EF19-4A22-902C-09D312ACA551" //@todo
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+  const navigate = useNavigate();
 
   const [requests, setRequests] = useState([]);
-  const { getAccessTokenSilently } = useAuth0();
-  
-  const getRequests = useCallback(async () => {
-    const accessToken = await getAccessTokenSilently();
-    axiosInstance
-      .get(routes.request.getUserRequests(userId), {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then(({ data }) => {
-        setRequests(data)
-      });
-  }, [getAccessTokenSilently]);
 
   useEffect(() => {
-    getRequests();
-  }, [getRequests]);
+    if (!isAuthenticated) {
+      navigate('/requests');
+    }
+  }, [isAuthenticated]);
+
+
+  const getUserRequests = useCallback(async () => {
+    const accessToken = await getAccessTokenSilently();
+    axiosInstance.get(routes.request.getRequestsForUser, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+          }
+    }).then(({ data }) => {
+        setRequests(data);
+      })
+  }, [getAccessTokenSilently]);
+
+   useEffect(() => {
+    getUserRequests();
+  }, [getUserRequests]);
 
   return (
       <Layout>        

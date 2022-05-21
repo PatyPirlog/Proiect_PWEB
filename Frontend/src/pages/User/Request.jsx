@@ -6,15 +6,18 @@ import axiosInstance from "../../configs/Axios";
 import { useParams } from "react-router-dom";
 import { Card, Container, ListGroup, ListGroupItem } from "react-bootstrap";
 
+
 const Request = () => {
   const [request, setRequest] = useState([]);
-   
   const { id } = useParams();
   const { getAccessTokenSilently } = useAuth0();
 
-  const getRequest = useCallback(async () => {
-    const accessToken = await getAccessTokenSilently();
+  // -------
+  
 
+  // ------
+  const getRequest = useCallback(async () => {
+  const accessToken = await getAccessTokenSilently();
     axiosInstance
       .get(routes.request.get(id), {
         headers: {

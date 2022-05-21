@@ -2,6 +2,6 @@
 {
     public interface IGetAllSubscriptionsForUserQueryHandler
     {
-        public Task<IEnumerable<SubscriptionDTO>> HandleAsync(Guid id, CancellationToken cancellationToken);
+        public Task<IEnumerable<SubscriptionDTO>> HandleAsync(string identityId, CancellationToken cancellationToken);
     }
 }

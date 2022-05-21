@@ -9,17 +9,13 @@ namespace Proiect_PWEB.Core.Domain.UserDomain
 {
     public class InsertUserCommand : ICreateAggregateCommand
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public string? IdentityId { get; set; }
         public string Email { get; set; }
-        public string Phone { get; set; }
 
-        public InsertUserCommand(string name, string surname, string email, string phone)
+        public InsertUserCommand(string identityId, string email)
         {
-            Name = name;
-            Surname = surname;
+            IdentityId = identityId;
             Email = email;
-            Phone = phone;
         }
     }
 }

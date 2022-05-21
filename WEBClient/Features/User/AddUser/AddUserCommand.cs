@@ -5,13 +5,12 @@ namespace Proiect_PWEB.Api.Features.User.AddUser
     public class AddUserCommand : InsertUserCommand
     {
         public AddUserCommand(
-            string name,
-            string surname,
-            string email, 
-            string phone
+            string? identityId,
+            string email
             )
-            : base(name, surname, email, phone)
+            : base(identityId, email)
         {
+            
         }
     }
 }

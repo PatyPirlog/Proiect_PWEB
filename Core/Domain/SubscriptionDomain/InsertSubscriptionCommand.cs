@@ -8,14 +8,12 @@ namespace Proiect_PWEB.Core.Domain.SubscriptionDomain
 {
     public class InsertSubscriptionCommand : ICreateAggregateCommand
     {
-        public string? Description { get; set; }
-        public Guid UserId { get; set; }
+        public string IdentityId { get; set; }
         public Guid CountryId { get; set; }
 
-        public InsertSubscriptionCommand(string? description, Guid userId, Guid countryId)
+        public InsertSubscriptionCommand(string identityId, Guid countryId)
         {
-            Description = description;
-            UserId = userId;
+            IdentityId = identityId;
             CountryId = countryId;
         }
 

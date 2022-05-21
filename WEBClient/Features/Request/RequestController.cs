@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Proiect_PWEB.Api.Authorization;
 using Proiect_PWEB.Api.Features.Request.AddRequest;
 using Proiect_PWEB.Api.Features.Request.DeleteRequest;
 using Proiect_PWEB.Api.Features.Request.GetAllRequests;
@@ -38,8 +39,17 @@ namespace Proiect_PWEB.Api.Features.Request
         [Authorize]
         public async Task<IActionResult> AddRequestAsync([FromBody] AddRequestCommand command, CancellationToken cancellationToken)
         {
-            if(command == null)
+            var identityId = User.GetUserIdentityId();
+
+            if (identityId == null)
+            {
+                return Unauthorized();
+            }
+
+            if (command == null)
                 return StatusCode((int)HttpStatusCode.BadRequest);
+
+            command.IdentityId = identityId;
 
             await addRequestCommandHandler.HandleAsync(command, cancellationToken);
 
@@ -57,9 +67,15 @@ namespace Proiect_PWEB.Api.Features.Request
 
         [HttpGet("getAllRequestsForUser")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<RequestDTO>>> GetRequestsForUserAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<RequestDTO>>> GetRequestsForUserAsync(CancellationToken cancellationToken)
         {
-            var requests = await getAllRequestsForUserQueryHandler.HandleAsync(id, cancellationToken);
+            var identityId = User.GetUserIdentityId();
+
+            if (identityId == null)
+            {
+                return Unauthorized();
+            }
+            var requests = await getAllRequestsForUserQueryHandler.HandleAsync(identityId, cancellationToken);
 
             return Ok(requests);
         }
@@ -77,6 +93,12 @@ namespace Proiect_PWEB.Api.Features.Request
         [Authorize]
         public async Task<IActionResult> DeleteRequestAsync([FromBody] Guid id, CancellationToken cancellationToken)
         {
+            var identityId = User.GetUserIdentityId();
+
+            if (identityId == null)
+            {
+                return Unauthorized();
+            }
             await deleteRequestCommandHandler.HandleAsync(id, cancellationToken);
 
             return NoContent();

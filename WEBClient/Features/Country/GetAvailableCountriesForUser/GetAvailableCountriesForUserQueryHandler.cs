@@ -15,10 +15,14 @@ namespace Proiect_PWEB.Api.Features.Country.GetAvailableCountriesForUser
             this._context = context;
         }
 
-        public async Task<IEnumerable<CountryDTO>> HandleAsync(Guid id, CancellationToken cancellation)
+        public async Task<IEnumerable<CountryDTO>> HandleAsync(string identityId, CancellationToken cancellation)
         {
+            var userId = await _context.User.Where(user => user.IdentityId == identityId)
+                  .Select(user => user.Id)
+                  .FirstOrDefaultAsync(cancellation);
+
             var subscriptionsCountryGuids = await _context.Subscription
-                .Where(s => s.UserId == id)
+                .Where(s => s.UserId == userId)
                 .Select(s => s.CountryId)
                 .ToListAsync(cancellation);
 

@@ -8,7 +8,6 @@ namespace Proiect_PWEB.Core
 {
     public class Subscription : Entity, IAggregateRoot
     {
-        public string? Description { get; set; }
         public Guid UserId { get; set; }
         public Guid CountryId { get; set; }
 
@@ -16,13 +15,6 @@ namespace Proiect_PWEB.Core
         {
             this.UserId = userId;
             this.CountryId = countryId;
-        }
-
-        public Subscription(Guid userId, Guid countryId, string description)
-        {
-            this.UserId = userId;
-            this.CountryId = countryId;
-            this.Description = description;
         }
 
         public virtual Country Country { get; set; } = null!;

@@ -4,17 +4,32 @@ import axiosInstance from "../../configs/Axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { routes } from "../../configs/Api";
 import { Button, Container, CloseButton, Col, Form, ListGroup, Card } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import { authSettings } from "../../AuthSettings";
+import { Link, useNavigate  } from "react-router-dom";
+import jwt from 'jwt-decode';
 
 const Categories = () => {
   const { getAccessTokenSilently } = useAuth0();
   const [categories, setCategories] = useState([]);
-  const { user } = useAuth0();
-  const navigate = useNavigate();
 
-  const getAllCategory = useCallback(async () => {
+  const [permissions, setPermissions] = useState("");
+  const navigate = useNavigate();
+  
+  const getPermissions = useCallback(async () => {
     const accessToken = await getAccessTokenSilently();
+    const data = jwt(accessToken);
+    setPermissions(data.permissions);
+    console.log(data);
+
+  }, [getAccessTokenSilently]);
+
+  useEffect(() => {
+    getPermissions()
+  }, []);
+
+  const getAllCategories = useCallback(async () => {
+    const accessToken = await getAccessTokenSilently();
+    //console.log(user);
     axiosInstance
       .get(routes.category.getAll, {
         headers: {
@@ -26,9 +41,6 @@ const Categories = () => {
       });
   }, [getAccessTokenSilently]);
 
-  useEffect(() => {
-    getAllCategory();
-  }, [getAllCategory]);
 
   const onDelete = async (category) => {
     const accessToken = await getAccessTokenSilently();
@@ -38,7 +50,7 @@ const Categories = () => {
         Authorization: `Bearer ${accessToken}`,
     },
     })
-    .then(() => getAllCategory());    
+    .then(() => getAllCategories());    
   }
 
   const onAdd = async () => {
@@ -56,7 +68,15 @@ const Categories = () => {
       .then(() => { /** @todo after response?? */ });
   }
  
+  useEffect(() => {
+    getAllCategories();
+  }, [getAllCategories]);
+
+  // de adaugat si permisions
   return (
+    <>
+    {
+    permissions[0] === "admin" &&
     <Layout>
     <Container>
 
@@ -95,6 +115,7 @@ const Categories = () => {
     
     </Container>
 </Layout>
+}</>
   );
 };
 

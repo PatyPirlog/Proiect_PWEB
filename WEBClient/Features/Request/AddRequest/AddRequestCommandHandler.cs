@@ -14,11 +14,14 @@ namespace Proiect_PWEB.Api.Features.Request.AddRequest
         public Task HandleAsync(AddRequestCommand command, CancellationToken cancellationToken)
         => requestRepository
             .AddAsync(new InsertRequestCommand(
-                command.UserId,
+                command.IdentityId,
                 command.CategoryId, 
                 command.CountryId, 
                 command.Title,
                 command.Address,
-                command.Description), cancellationToken);
+                command.Description,
+                command.Name,
+                command.Surname,
+                command.Phone), cancellationToken);
     }
 }
