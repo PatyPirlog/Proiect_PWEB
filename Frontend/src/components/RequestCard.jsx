@@ -1,20 +1,18 @@
 import React from "react";
 import { Card, Badge, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-
 const RequestCard = ({
     id,
     categoryName, 
     countryName, 
-    title, 
-    address, 
-    description
+    title,
+    description,
+    userName, 
+    userEmail, 
+    userPhone,
+    address,
+    buttonName,
+    onAction
 }) => {
-    const navigate = useNavigate();
-    
-    const handleClick = (id) => {
-        navigate(`/requests/${id}`);
-    };
 
     return (
         <Card style={{ width: '100%'}}>
@@ -27,13 +25,21 @@ const RequestCard = ({
                         {' '}{' '}{' '}{' '}
                         <Badge pill bg="info">{countryName}</Badge>
                     </Card.Text>
-                    <Card.Text className="mt-1 mb-1"> Adress: {address} </Card.Text>
                     <Card.Text className="mt-1 mb-1"> Description: {description} </Card.Text>
+                    {userName && 
+                    <Card.Text className="mt-1 mb-1"> Name: {userName} </Card.Text>}
+                    {userEmail && 
+                    <Card.Text className="mt-1 mb-1"> Email: {userEmail} </Card.Text>}
+                    {userPhone && 
+                    <Card.Text className="mt-1 mb-1"> Phone: {userPhone} </Card.Text>}
+                    {address && 
+                    <Card.Text className="mt-1 mb-1"> Address: {address} </Card.Text>}
                 </div>
+
                 <div className="d-flex align-items-center" >
-                <Button variant="outline-info" size="md" onClick={() => handleClick(id)}>
-                    Help
-                </Button>
+                    <Button variant="outline-info" size="md" onClick={onAction}>
+                        {buttonName}
+                    </Button>
                 </div>
             </div>
         </Card.Body>

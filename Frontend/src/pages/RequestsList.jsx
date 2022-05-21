@@ -7,16 +7,15 @@ import { routes } from "../configs/Api";
 import axiosInstance from "../configs/Axios";
 import SubscriptionModal from "../components/SubscriptionModal";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
 const RequestsList = () => {
   const [requests, setRequests] = useState([]);
   const [openedModal, setOpenedModal] = useState(false);
-  const { logout, user } = useAuth0();
   const { getAccessTokenSilently } = useAuth0();
   
   const getAllRequests = useCallback(async () => {
     const accessToken = await getAccessTokenSilently();
-    console.log(user);
     axiosInstance
       .get(routes.request.getAll, {
         headers: {
@@ -32,6 +31,12 @@ const RequestsList = () => {
     getAllRequests();
   }, [getAllRequests]);
 
+  
+  const navigate = useNavigate();
+  const onHelp = (id) => {
+    navigate(`/requests/${id}`);
+  };
+
   return (
       <Layout>
         <SubscriptionModal
@@ -39,6 +44,7 @@ const RequestsList = () => {
           closeModal={() => {
             setOpenedModal(false);
           }}
+          showSubscriptions={true}
         /> 
         
         <Container>
@@ -52,7 +58,24 @@ const RequestsList = () => {
 
           {/* The requests list */}
           { requests.map((request, index) =>  
-            <RequestCard key={index} {...request}/>
+            <RequestCard key={index}  
+              {...(({ 
+                      id, 
+                      categoryName, 
+                      countryName, 
+                      title, 
+                      description, 
+                  }) => ({ 
+                      id, 
+                      categoryName, 
+                      countryName, 
+                      title, 
+                      description, 
+                  }))(request)
+              }
+              onAction={() => onHelp(request.id)}
+              buttonName="Help"
+            />
           )}
         </Container>
       </Layout>

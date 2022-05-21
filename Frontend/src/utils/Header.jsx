@@ -21,19 +21,19 @@ const Header = () => {
             </Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link href="/requests">Requests</Nav.Link>
+              <Nav.Link href="/my-requests">My Request</Nav.Link>
               <Nav.Link href="/add-request">Add request</Nav.Link>
-              <Nav.Link href="/profile">Profile</Nav.Link>
+              <Nav.Link href="/subscriptions">My subscriptions</Nav.Link>
+              <Nav.Link 
+                className="signout"
+                href="/"
+                onClick={() => {
+                  logout({ returnTo: window.location.origin });
+                }}
+              >
+                Signout
+              </Nav.Link>
             </Nav>
-            <Link
-              className="signout"
-              to="/"
-              onClick={() => {
-                logout({ returnTo: window.location.origin });
-              }}
-            >
-              Signout
-            </Link>
-
           </Container>
         </Navbar>
         </>

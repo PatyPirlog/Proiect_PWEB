@@ -4,18 +4,15 @@ import axiosInstance from "../../configs/Axios";
 import { routes } from "../../configs/Api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Container, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const RequestForm = () => {
   const userId = "A7C99B00-EF19-4A22-902C-09D312ACA551" //@todo
   const { getAccessTokenSilently } = useAuth0();
+  const navigate = useNavigate();
 
   const [countries, setCountries] = useState([]);
   const [categories, setCategories] = useState([]);
-  // const titleRef = useRef();
-  // const categoryRef = useRef();
-  // const descriptionRef = useRef();
-  // const countryRef = useRef();
-  // const adressRef = useRef();
  
   const getAllCountries = useCallback(async () => {
     const accessToken = await getAccessTokenSilently();
@@ -55,6 +52,9 @@ const RequestForm = () => {
 
     apiPayload.userId = userId;
     apiPayload.title = document.getElementById("title").value;
+    apiPayload.name = document.getElementById("name").value;
+    apiPayload.surname = document.getElementById("surname").value;
+    apiPayload.phone = document.getElementById("phone").value;
     apiPayload.address = document.getElementById("address").value;
     apiPayload.description = document.getElementById("description").value;
 
@@ -68,24 +68,42 @@ const RequestForm = () => {
     
     // send the new request to server
     axiosInstance
-            .post(routes.request.addRequest, apiPayload, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            })
-            //.then(() => /* @todo after done*/);
+      .post(routes.request.addRequest, apiPayload, {
+      headers: {
+          Authorization: `Bearer ${accessToken}`,
+      },
+      })
+      .then(() => { /** @todo after response?? */ });
+            
+    navigate('/my-requests');
   }
   return (
     <Layout>
       <Container>
         <Form className="mt-5" onSubmit={onAddRequest} >
           <Form.Group className="mb-3">
-            <Form.Label>Title</Form.Label>
+            <Form.Label>Request Title</Form.Label>
             <Form.Control placeholder="Enter Title" id="title"/>
           </Form.Group>
 
+          
           <Form.Group className="mb-3">
-            <Form.Label>Country</Form.Label><br />
+            <Form.Label>Name</Form.Label>
+            <Form.Control placeholder="Enter Name" id="name"/>
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Surname</Form.Label>
+            <Form.Control placeholder="Enter Surname" id="surname"/>
+          </Form.Group>
+          
+          <Form.Group className="mb-3">
+            <Form.Label>Phone</Form.Label>
+            <Form.Control placeholder="Enter Phone" id="phone"/>
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Category</Form.Label><br />
             <Form.Select id="category">
               {categories.map((category) => {
                 return(
@@ -112,8 +130,8 @@ const RequestForm = () => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Adress</Form.Label>
-            <Form.Control placeholder="Enter Adress" id="address"/>
+            <Form.Label>Address</Form.Label>
+            <Form.Control placeholder="Enter Address" id="address"/>
           </Form.Group>
 
           <Button variant="info" type="submit">

@@ -55,7 +55,7 @@ const Request = () => {
               Country: {request.countryName}
             </Card.Text>
             <Card.Text>
-              Adress: {request.address}
+              Address: {request.address}
             </Card.Text>
             <Card.Text>
               Phone: {request.userPhone}

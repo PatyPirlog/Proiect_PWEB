@@ -7,12 +7,12 @@ import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 
 
-const SubscriptionModal = ({ modalIsOpen, closeModal }) => {
+const SubscriptionModal = ({ modalIsOpen, closeModal, showSubscriptions }) => {
     const [subscriptions, setSubscriptions] = useState([]);
     const [countries, setCountries] = useState([]);
-   const [selectedCountries, setSelectedCountries] = useState([]);
-   const [saved, setSaved] = useState(false);
-   const { getAccessTokenSilently } = useAuth0();
+    const [selectedCountries, setSelectedCountries] = useState([]);
+    const [saved, setSaved] = useState(false);
+    const { getAccessTokenSilently } = useAuth0();
 
     const userId = "A7C99B00-EF19-4A22-902C-09D312ACA551" //@todo
     
@@ -34,7 +34,13 @@ const SubscriptionModal = ({ modalIsOpen, closeModal }) => {
                 Authorization: `Bearer ${accessToken}`,
             },
             })
-            .then(() => getAllSubscriptions());
+            .then(() => {
+              getAllSubscriptions()
+              if (!showSubscriptions) {
+                closeModal()
+              }
+
+            });
         
         setSaved(true);
         //closeModal();
@@ -79,7 +85,6 @@ const SubscriptionModal = ({ modalIsOpen, closeModal }) => {
 
     <Modal.Header >
         <Modal.Title>Stay informed</Modal.Title>
-        <CloseButton variant="white" onClick={closeModal}/>
     </Modal.Header>
     
     <Modal.Body>
@@ -98,7 +103,7 @@ const SubscriptionModal = ({ modalIsOpen, closeModal }) => {
             />
     
     </Modal.Body>
-    <Modal.Body>
+    {showSubscriptions && <Modal.Body>
     {/* Your subscriptions */}
         <h6>Your subscriptions</h6>
         <ListGroup variant="flush">
@@ -109,7 +114,7 @@ const SubscriptionModal = ({ modalIsOpen, closeModal }) => {
           )}
         </ListGroup>
     </Modal.Body>
-    
+}
     <Modal.Footer>
       <Button variant="secondary" onClick={closeModal}>
         Close
