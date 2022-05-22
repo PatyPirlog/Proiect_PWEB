@@ -43,13 +43,13 @@ const MyRequests = () => {
 			console.log(apiPayload);
 
 			axiosInstance
-				.get(routes.request.deleteRequest, apiPayload, {
+				.post(routes.request.deleteRequest, apiPayload, {
 					headers: {
 						Authorization: `Bearer ${accessToken}`,
 					},
 				})
-				.then(({ data }) => {
-					setRequests(data);
+				.then(() => {
+					getUserRequests();
 				});
 		},
 		[getAccessTokenSilently]

@@ -48,9 +48,14 @@ namespace Proiect_PWEB.Infrastructure.Data.Repositories
                 _context.Request.Remove(request);
         }
 
-        public Task<DomainOfAggregate<Request>?> GetByIdAsync(Guid aggregateId, CancellationToken cancellationToken)
+        public async Task<DomainOfAggregate<Request>?> GetByIdAsync(Guid aggregateId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var request = await _context.Request.FirstOrDefaultAsync(request => request.Id == aggregateId, cancellationToken);
+
+            if (request == null)
+                return null;
+
+            return new RequestDomain(request);
         }
 
         public Task SaveAsync(CancellationToken cancellationToken) => _context.SaveChangesAsync(cancellationToken);

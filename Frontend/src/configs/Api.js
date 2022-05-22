@@ -10,7 +10,7 @@ const routes = {
 	subscription: {
 		getSubscriptions: "Subscription/getAllSubscriptionsForUser",
 		addSubscriptions: "Subscription/addMultipleSubscriptions",
-		deleteSubscription: (id) => `Subscription/deleteSubscription?id=${id}`,
+		deleteSubscription: "Subscription/deleteSubscription",
 	},
 	country: {
 		getAll: "Country/getAllCountries",

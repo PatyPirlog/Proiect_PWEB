@@ -37,8 +37,10 @@ function Subscriptions() {
 
 	const onSubscriptionDelete = async (subscription) => {
 		const accessToken = await getAccessTokenSilently();
+		const apiPayload = {};
+		apiPayload.id = subscription.id;
 		axiosInstance
-			.post(routes.subscription.deleteSubscription(subscription.id), {
+			.post(routes.subscription.deleteSubscription, apiPayload, {
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
