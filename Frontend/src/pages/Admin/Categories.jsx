@@ -1,20 +1,11 @@
-import React, { useCallback, useEffect, useState, useRef } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Layout from "../../utils/Layout";
 import axiosInstance from "../../configs/Axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { routes } from "../../configs/Api";
-import {
-	Button,
-	Container,
-	CloseButton,
-	Col,
-	Form,
-	ListGroup,
-	Card,
-} from "react-bootstrap";
-import { authSettings } from "../../AuthSettings";
-import { Link, useNavigate } from "react-router-dom";
+import { Button, Container, Form, ListGroup, Card } from "react-bootstrap";
 import jwt from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 const Categories = () => {
 	const { getAccessTokenSilently } = useAuth0();
@@ -27,7 +18,6 @@ const Categories = () => {
 		const accessToken = await getAccessTokenSilently();
 		const data = jwt(accessToken);
 		setPermissions(data.permissions);
-		console.log(data);
 	}, [getAccessTokenSilently]);
 
 	useEffect(() => {
@@ -36,7 +26,6 @@ const Categories = () => {
 
 	const getAllCategories = useCallback(async () => {
 		const accessToken = await getAccessTokenSilently();
-		//console.log(user);
 		axiosInstance
 			.get(routes.category.getAll, {
 				headers: {
@@ -45,13 +34,18 @@ const Categories = () => {
 			})
 			.then(({ data }) => {
 				setCategories(data);
+			})
+			.catch(() => {
+				navigate(`/unauthorized`);
 			});
 	}, [getAccessTokenSilently]);
 
 	const onDelete = async (category) => {
 		const accessToken = await getAccessTokenSilently();
+		const apiPayload = {};
+		apiPayload.id = category.id;
 		axiosInstance
-			.post(routes.category.delete(category.id), {
+			.post(routes.category.delete, apiPayload, {
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
@@ -64,23 +58,19 @@ const Categories = () => {
 		const accessToken = await getAccessTokenSilently();
 
 		apiPayload.name = document.getElementById("name").value;
-		console.log(apiPayload);
 		axiosInstance
 			.post(routes.category.add, apiPayload, {
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
 			})
-			.then(() => {
-				/** @todo after response?? */
-			});
+			.then(() => {});
 	};
 
 	useEffect(() => {
 		getAllCategories();
 	}, [getAllCategories]);
 
-	// de adaugat si permisions
 	return (
 		<>
 			{permissions[0] === "admin" && (
@@ -91,10 +81,15 @@ const Categories = () => {
 					>
 						<Card style={{ width: "100%" }}>
 							<Card.Body>
-								<Card.Title>All categories</Card.Title>
+								<Card.Title className="title">
+									All categories
+								</Card.Title>
 								<Card.Text>
 									<ListGroup variant="flush">
-										<Form className="mt-5" onSubmit={onAdd}>
+										<Form
+											className="mt-4 text"
+											onSubmit={onAdd}
+										>
 											<Form.Group className="mb-3">
 												<div className="d-flex justify-content-between mr-3">
 													<Form.Control
@@ -103,8 +98,7 @@ const Categories = () => {
 														id="name"
 													/>
 													<Button
-														variant="outline-success"
-														size="sm"
+														className="button button-info"
 														type="submit"
 													>
 														Add category
@@ -113,12 +107,12 @@ const Categories = () => {
 											</Form.Group>
 										</Form>
 										{categories.map((category) => (
-											<ListGroup.Item className="d-flex justify-content-between">
+											<ListGroup.Item className="d-flex justify-content-between text">
 												{category.name}
 
 												<Button
-													variant="outline-danger"
-													size="sm"
+													className="button button-delete"
+													id="button-delete-subscription"
 													onClick={() =>
 														onDelete(category)
 													}

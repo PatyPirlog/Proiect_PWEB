@@ -5,6 +5,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import axiosInstance from "../../configs/Axios";
 import { useParams } from "react-router-dom";
 import { Card, Container } from "react-bootstrap";
+import "../../styling/global.css";
+import "../../styling/user.css";
 
 const Request = () => {
 	const [request, setRequest] = useState([]);
@@ -36,28 +38,37 @@ const Request = () => {
 				<div className="d-flex row justify-content-center">
 					<Card className="md-6 ml-2 mr-2" style={{ width: "30rem" }}>
 						<Card.Body>
-							<Card.Title>{request.title}</Card.Title>
-							<Card.Text>{request.description}</Card.Text>
-							<Card.Text>
+							<Card.Title className="subtitle">
+								{request.title}
+							</Card.Title>
+							<Card.Text className="text">
+								{request.description}
+							</Card.Text>
+							<Card.Text className="text">
 								Posted by {request.surname + " " + request.name}
 							</Card.Text>
-							<Card.Text>
+							<Card.Text className="text">
 								Category: {request.categoryName}
 							</Card.Text>
 						</Card.Body>
 					</Card>
-					<Card
-						className="md-6 mt-4 ml-2 mr-2"
-						style={{ width: "30rem" }}
-					>
+					<Card className="md-6 ml-2 mr-2" style={{ width: "30rem" }}>
 						<Card.Body>
-							<Card.Title>Contact</Card.Title>
-							<Card.Text>
+							<Card.Title className="subtitle">
+								Contact
+							</Card.Title>
+							<Card.Text className="text">
 								Country: {request.countryName}
 							</Card.Text>
-							<Card.Text>Address: {request.address}</Card.Text>
-							<Card.Text>Phone: {request.phone}</Card.Text>
-							<Card.Text>Email: {request.userEmail}</Card.Text>
+							<Card.Text className="text">
+								Address: {request.address}
+							</Card.Text>
+							<Card.Text className="text">
+								Phone: {request.phone}
+							</Card.Text>
+							<Card.Text className="text">
+								Email: {request.userEmail}
+							</Card.Text>
 						</Card.Body>
 					</Card>
 				</div>

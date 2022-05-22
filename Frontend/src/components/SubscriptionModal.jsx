@@ -1,18 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-	Button,
-	CloseButton,
-	Col,
-	Container,
-	Form,
-	ListGroup,
-	Modal,
-} from "react-bootstrap";
+import { Button, Container, ListGroup, Modal } from "react-bootstrap";
 import axiosInstance from "../configs/Axios";
 import { routes } from "../configs/Api";
-import MultiSelect from "react-bootstrap-multiselect";
 import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
+import "../styling/global.css";
 
 const SubscriptionModal = ({ modalIsOpen, closeModal, showSubscriptions }) => {
 	const [subscriptions, setSubscriptions] = useState([]);
@@ -20,8 +12,6 @@ const SubscriptionModal = ({ modalIsOpen, closeModal, showSubscriptions }) => {
 	const [selectedCountries, setSelectedCountries] = useState([]);
 	const [saved, setSaved] = useState(false);
 	const { getAccessTokenSilently, user } = useAuth0();
-
-	const userId = "A7C99B00-EF19-4A22-902C-09D312ACA551"; //@todo
 
 	const onSave = async () => {
 		const accessToken = await getAccessTokenSilently();
@@ -49,7 +39,6 @@ const SubscriptionModal = ({ modalIsOpen, closeModal, showSubscriptions }) => {
 			});
 
 		setSaved(true);
-		//closeModal();
 		setSelectedCountries([]);
 	};
 
@@ -89,13 +78,18 @@ const SubscriptionModal = ({ modalIsOpen, closeModal, showSubscriptions }) => {
 			<Modal show={modalIsOpen} onHide={closeModal}>
 				<Container>
 					<Modal.Header>
-						<Modal.Title>Stay informed</Modal.Title>
+						<Modal.Title className="title">
+							Stay informed
+						</Modal.Title>
 					</Modal.Header>
 
 					<Modal.Body>
 						{/* Add subscriptions */}
-						<h6>Add your favourite locations to stay tunned</h6>
+						<h6 className="subtitle">
+							Add your favourite locations to stay tunned
+						</h6>
 						<DropdownMultiselect
+							className="text"
 							options={countries.map((country) => ({
 								key: country.id,
 								label: country.name,
@@ -111,9 +105,9 @@ const SubscriptionModal = ({ modalIsOpen, closeModal, showSubscriptions }) => {
 						/>
 					</Modal.Body>
 					{showSubscriptions && (
-						<Modal.Body>
+						<Modal.Body className="text">
 							{/* Your subscriptions */}
-							<h6>Your subscriptions</h6>
+							<h6 className="subtitle">Your subscriptions</h6>
 							<ListGroup variant="flush">
 								{subscriptions.map((subscription) => (
 									<ListGroup.Item>
@@ -124,10 +118,10 @@ const SubscriptionModal = ({ modalIsOpen, closeModal, showSubscriptions }) => {
 						</Modal.Body>
 					)}
 					<Modal.Footer>
-						<Button variant="secondary" onClick={closeModal}>
+						<Button className="button-close" onClick={closeModal}>
 							Close
 						</Button>
-						<Button variant="info" onClick={onSave}>
+						<Button className="button-info" onClick={onSave}>
 							Save Changes
 						</Button>
 					</Modal.Footer>

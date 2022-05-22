@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
 import Layout from "../../utils/Layout";
-//import axiosInstance from "../../configs/Axios";
 import RequestCard from "../../components/RequestCard";
 import { Container } from "react-bootstrap";
 import { routes } from "../../configs/Api";
@@ -9,7 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 
 const MyRequests = () => {
-	const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+	const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 	const navigate = useNavigate();
 
 	const [requests, setRequests] = useState([]);
@@ -30,8 +29,31 @@ const MyRequests = () => {
 			})
 			.then(({ data }) => {
 				setRequests(data);
+			})
+			.catch(() => {
+				navigate(`/unauthorized`);
 			});
 	}, [getAccessTokenSilently]);
+
+	const onDelete = useCallback(
+		async (request) => {
+			const accessToken = await getAccessTokenSilently();
+			const apiPayload = {};
+			apiPayload.id = request.id;
+			console.log(apiPayload);
+
+			axiosInstance
+				.get(routes.request.deleteRequest, apiPayload, {
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+					},
+				})
+				.then(({ data }) => {
+					setRequests(data);
+				});
+		},
+		[getAccessTokenSilently]
+	);
 
 	useEffect(() => {
 		getUserRequests();
@@ -41,6 +63,7 @@ const MyRequests = () => {
 		<Layout>
 			<Container className="mt-5 mb-5 justify-content-center">
 				{/* The requests list */}
+				<h6 className="title mb-5">My requests</h6>
 				{requests.map((request, index) => (
 					<RequestCard
 						key={index}
@@ -68,7 +91,7 @@ const MyRequests = () => {
 							address,
 						}))(request)}
 						onAction={() => {
-							console.log("Delete");
+							onDelete(request);
 						}}
 						buttonName="Delete"
 					/>

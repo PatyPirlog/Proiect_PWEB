@@ -43,11 +43,12 @@ namespace Proiect_PWEB.Api.Features.Category
             return Ok(categories);
         }
 
+        //[HttpPost("deleteCategory")]
         [HttpPost("deleteCategory")]
         [Authorize("AdminAccess")]
-        public async Task<IActionResult> DeleteCategory([FromRoute] Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteCategory([FromBody] DeleteCategoryCommand command, CancellationToken cancellationToken)
         {
-            await deleteCategoryHandler.HandleAsync(id, cancellationToken);
+            await deleteCategoryHandler.HandleAsync(command.Id, cancellationToken);
 
             return NoContent();
         }

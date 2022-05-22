@@ -23,6 +23,9 @@ const RequestForm = () => {
 			})
 			.then(({ data }) => {
 				setCountries(data);
+			})
+			.catch(() => {
+				navigate(`/unauthorized`);
 			});
 	}, [getAccessTokenSilently]);
 
@@ -36,6 +39,9 @@ const RequestForm = () => {
 			})
 			.then(({ data }) => {
 				setCategories(data);
+			})
+			.catch(() => {
+				navigate(`/unauthorized`);
 			});
 	}, [getAccessTokenSilently]);
 
@@ -77,9 +83,7 @@ const RequestForm = () => {
 					Authorization: `Bearer ${accessToken}`,
 				},
 			})
-			.then(() => {
-				/** @todo after response?? */
-			});
+			.then(() => {});
 
 		navigate("/my-requests");
 	};
@@ -89,7 +93,10 @@ const RequestForm = () => {
 				className="mt-5 mb-5 justify-content-center"
 				style={{ width: "40rem" }}
 			>
-				<Form onSubmit={onAddRequest}>
+				<Form onSubmit={onAddRequest} className="text">
+					<h6 className="title mb-5">
+						Add a new request to get helped
+					</h6>
 					<Form.Group className="mb-3">
 						<Form.Label>Request Title</Form.Label>
 						<Form.Control placeholder="Enter Title" id="title" />
@@ -116,7 +123,7 @@ const RequestForm = () => {
 					<Form.Group className="mb-3">
 						<Form.Label>Category</Form.Label>
 						<br />
-						<Form.Select id="category">
+						<Form.Select id="category" className="select">
 							{categories.map((category) => {
 								return (
 									<option
@@ -143,7 +150,7 @@ const RequestForm = () => {
 					<Form.Group className="mb-3">
 						<Form.Label>Country</Form.Label>
 						<br />
-						<Form.Select id="country">
+						<Form.Select id="country" className="select">
 							{countries.map((country) => {
 								return (
 									<option
@@ -167,7 +174,11 @@ const RequestForm = () => {
 						/>
 					</Form.Group>
 					<div className="d-flex row mt-4 justify-content-md-center">
-						<Button variant="info" type="submit" size="md">
+						<Button
+							className="button button-info"
+							type="submit"
+							size="md"
+						>
 							Add Request
 						</Button>
 					</div>

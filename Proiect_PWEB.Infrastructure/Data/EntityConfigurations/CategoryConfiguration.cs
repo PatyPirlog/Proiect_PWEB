@@ -9,7 +9,7 @@ namespace Proiect_PWEB.Infrastructure.Data.EntityConfigurations
         public override void Configure(EntityTypeBuilder<Category> builder)
         {
 
-            builder.Property(e => e.Id).HasDefaultValueSql("(newid())");
+            //builder.Property(e => e.Id).HasDefaultValueSql("(newid())");
 
             builder.Property(e => e.Name)
                 .IsRequired()

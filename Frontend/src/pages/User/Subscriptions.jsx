@@ -1,29 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-	Button,
-	Container,
-	CloseButton,
-	Col,
-	Form,
-	ListGroup,
-	Card,
-} from "react-bootstrap";
+import { Button, Container, ListGroup, Card } from "react-bootstrap";
 import axiosInstance from "../../configs/Axios";
 import { routes } from "../../configs/Api";
-import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 import Layout from "../../utils/Layout";
 import SubscriptionModal from "../../components/SubscriptionModal";
+import { useNavigate } from "react-router-dom";
+import "../../styling/global.css";
+import "../../styling/user.css";
 
-const Subscriptions = () => {
+function Subscriptions() {
 	const [subscriptions, setSubscriptions] = useState([]);
-	const [countries, setCountries] = useState([]);
-	const [selectedCountries, setSelectedCountries] = useState([]);
-	const [saved, setSaved] = useState(false);
 	const { getAccessTokenSilently } = useAuth0();
 	const [openedModal, setOpenedModal] = useState(false);
-
-	const userId = "A7C99B00-EF19-4A22-902C-09D312ACA551"; //@todo
+	const navigate = useNavigate();
 
 	const getAllSubscriptions = useCallback(async () => {
 		const accessToken = await getAccessTokenSilently();
@@ -35,6 +25,9 @@ const Subscriptions = () => {
 			})
 			.then(({ data }) => {
 				setSubscriptions(data);
+			})
+			.catch(() => {
+				navigate(`/unauthorized`);
 			});
 	}, [getAccessTokenSilently]);
 
@@ -66,18 +59,28 @@ const Subscriptions = () => {
 				className="mt-5 mb-5 justify-content-center"
 				style={{ width: "30rem" }}
 			>
+				<div className="d-flex d-flex flex-row mt-4 mb-4 justify-content-md-center">
+					<Button
+						className="button button-info"
+						onClick={() => setOpenedModal(true)}
+					>
+						Add new subscription
+					</Button>
+				</div>
 				<Card style={{ width: "100%" }}>
 					<Card.Body>
-						<Card.Title>Your subscriptions</Card.Title>
-						<Card.Text>
+						<Card.Title className="title">
+							Your subscriptions
+						</Card.Title>
+						<Card.Text className="text">
 							<ListGroup variant="flush">
 								{subscriptions.map((subscription) => (
 									<ListGroup.Item className="d-flex justify-content-between">
 										{subscription.countryName}
 
 										<Button
-											variant="outline-danger"
-											size="sm"
+											className="button button-delete"
+											id="button-delete-subscription"
 											onClick={() =>
 												onSubscriptionDelete(
 													subscription
@@ -92,19 +95,9 @@ const Subscriptions = () => {
 						</Card.Text>
 					</Card.Body>
 				</Card>
-
-				<div className="d-flex d-flex flex-row mt-4 mb-4 justify-content-md-center">
-					<Button
-						variant="outline-info"
-						size="md"
-						onClick={() => setOpenedModal(true)}
-					>
-						Add new subscription
-					</Button>
-				</div>
 			</Container>
 		</Layout>
 	);
-};
+}
 
 export default Subscriptions;

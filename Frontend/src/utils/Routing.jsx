@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Categories from "../pages/Admin/Categories";
 import Request from "../pages/User/Request";
@@ -8,9 +8,6 @@ import MyRequests from "../pages/User/MyRequests";
 import Subscriptions from "../pages/User/Subscriptions";
 import Unauthorized from "../pages/Unauthorized/Unauthorized";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link, useNavigate } from "react-router-dom";
-//import axios from "axios";
-import jwt from "jwt-decode";
 import axiosInstance from "../configs/Axios";
 
 const Router = () => {
@@ -23,8 +20,6 @@ const Router = () => {
 		}
 		if (isAuthenticated) {
 			async function getProfile() {
-				console.log("e autentificat");
-
 				const identityId = user["sub"].split("|")[1];
 				const accessToken = await getAccessTokenSilently();
 
@@ -37,11 +32,8 @@ const Router = () => {
 							},
 						}
 					)
-					.then((response) => {
-						//console.log(response);
-					})
+					.then((response) => {})
 					.catch((response) => {
-						console.log("pe catch");
 						const payload = {};
 						payload.identityId = identityId;
 						payload.name = "";

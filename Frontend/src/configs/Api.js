@@ -5,6 +5,7 @@ const routes = {
 		get: (id) => `Request/getRequestDetails?id=${id}`,
 		addRequest: "Request/addRequest",
 		getRequestsForUser: "Request/getAllRequestsForUser",
+		deleteRequest: "Request/deleteRequest",
 	},
 	subscription: {
 		getSubscriptions: "Subscription/getAllSubscriptionsForUser",
@@ -18,7 +19,7 @@ const routes = {
 	category: {
 		getAll: "Category/getAllCategories",
 		add: "Category/addCategory",
-		delete: (id) => `Category/deleteCategory?id=${id}`,
+		delete: "Category/deleteCategory",
 	},
 	user: {
 		addProfile: "User/addProfile",

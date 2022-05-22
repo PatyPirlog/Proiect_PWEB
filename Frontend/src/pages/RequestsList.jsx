@@ -8,6 +8,7 @@ import SubscriptionModal from "../components/SubscriptionModal";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import jwt from "jwt-decode";
+import "../styling/global.css";
 
 const RequestsList = () => {
 	const [requests, setRequests] = useState([]);
@@ -20,7 +21,6 @@ const RequestsList = () => {
 		const accessToken = await getAccessTokenSilently();
 		const data = jwt(accessToken);
 		setPermissions(data.permissions);
-		console.log(data);
 	}, [getAccessTokenSilently]);
 
 	useEffect(() => {
@@ -59,11 +59,11 @@ const RequestsList = () => {
 			/>
 			<Container className="mt-5 mb-5 justify-content-center">
 				{/* The Subscribe location button */}
-				<div className="d-flex d-flex flex-row-reverse mt-4 mb-4">
+				<div className="d-flex d-flex justify-content-between mt-4">
+					<h6 className="title mb-1">People in need of help</h6>
 					{permissions[0] !== "admin" && (
 						<Button
-							variant="outline-info"
-							size="md"
+							className="button button-info"
 							onClick={() => setOpenedModal(true)}
 						>
 							Subscribe location
