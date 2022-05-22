@@ -20,6 +20,7 @@ const SubscriptionModal = ({ modalIsOpen, closeModal, showSubscriptions }) => {
 		for (let id of selectedCountries) {
 			apiPayload.push({
 				identityId: identityId,
+				email: user.email,
 				countryId: id,
 			});
 		}

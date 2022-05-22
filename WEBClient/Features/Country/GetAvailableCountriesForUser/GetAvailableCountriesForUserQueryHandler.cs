@@ -26,16 +26,21 @@ namespace Proiect_PWEB.Api.Features.Country.GetAvailableCountriesForUser
                 .Select(s => s.CountryId)
                 .ToListAsync(cancellation);
 
-            if(!subscriptionsCountryGuids.Any())
-                throw new ApiException(System.Net.HttpStatusCode.Conflict, $"Couldn't find any subscriptions for the user!");
-            
-            var countries = await _context.Country
+            var countries = !subscriptionsCountryGuids.Any() ?
+                await _context.Country
                     .AsNoTracking()
-                    .Where(country => !subscriptionsCountryGuids.Contains(country.Id))
-                    .Select(country => new CountryDTO(country.Id,
-                    country.Name
-                    )).ToListAsync(cancellation);
-
+                    .Select(country => new CountryDTO(
+                        country.Id,
+                        country.Name
+                    )).ToListAsync(cancellation)
+            :
+                await _context.Country
+                        .AsNoTracking()
+                        .Where(country => !subscriptionsCountryGuids.Contains(country.Id))
+                        .Select(country => new CountryDTO(country.Id,
+                        country.Name
+                        )).ToListAsync(cancellation);
+           
             return countries;
         }
     }

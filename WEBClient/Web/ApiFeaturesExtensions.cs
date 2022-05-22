@@ -1,5 +1,6 @@
 ﻿using Proiect_PWEB.Api.Features.Category;
 using Proiect_PWEB.Api.Features.Country;
+using Proiect_PWEB.Api.Features.EmailSender;
 using Proiect_PWEB.Api.Features.Request;
 using Proiect_PWEB.Api.Features.Subscription;
 using Proiect_PWEB.Api.Features.User;
@@ -24,6 +25,9 @@ namespace Proiect_PWEB.Api.Web
 
             // Add Countries Handlers
             services.AddCountriesHandlers();
+
+            // Email Sender Handler
+            services.AddEmailSenderHandler();
         }
     }
 }

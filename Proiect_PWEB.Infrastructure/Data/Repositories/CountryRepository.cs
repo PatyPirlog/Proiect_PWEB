@@ -1,4 +1,5 @@
-﻿using Proiect_PWEB.Core;
+﻿using Microsoft.EntityFrameworkCore;
+using Proiect_PWEB.Core;
 using Proiect_PWEB.Core.Domain.CountryDomain;
 
 namespace Proiect_PWEB.Infrastructure.Data.Repositories
@@ -30,6 +31,14 @@ namespace Proiect_PWEB.Infrastructure.Data.Repositories
         public Task SaveAsync(CancellationToken cancellationToken)
         {
             return _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<List<string>> GetCountriesNames(List<Guid> countriesGuids)
+        {
+            return await _context.Country
+                .Where(country => countriesGuids.Contains(country.Id))
+                .Select(country => country.Name)
+                .ToListAsync();
         }
     }
 }

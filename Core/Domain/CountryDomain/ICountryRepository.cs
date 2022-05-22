@@ -9,5 +9,6 @@ namespace Proiect_PWEB.Core.Domain.CountryDomain
     public interface ICountryRepository : IRepositoryOfAggregate<Country, InsertCountryCommand>
     {
         public Task DeleteCountryAsync(Country model, CancellationToken cancellationToken);
+        public Task<List<string>> GetCountriesNames(List<Guid> countriesGuids);
     }
 }

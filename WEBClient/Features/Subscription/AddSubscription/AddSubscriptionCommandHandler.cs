@@ -1,4 +1,5 @@
-﻿using Proiect_PWEB.Core.Domain.SubscriptionDomain;
+﻿using Proiect_PWEB.Api.Features.EmailSender;
+using Proiect_PWEB.Core.Domain.SubscriptionDomain;
 
 namespace Proiect_PWEB.Api.Features.Subscription.AddSubscription
 {
@@ -11,8 +12,11 @@ namespace Proiect_PWEB.Api.Features.Subscription.AddSubscription
             this.subscriptionRepository = subscriptionRepository;
         }
 
-        public Task HandleAsync(AddSubscriptionCommand command, CancellationToken cancellationToken)
-            => subscriptionRepository
-            .AddAsync(new AddSubscriptionCommand(command.IdentityId, command.CountryId), cancellationToken);
+        public async Task HandleAsync(AddSubscriptionCommand command, CancellationToken cancellationToken)
+        {
+            await subscriptionRepository
+               .AddAsync(new AddSubscriptionCommand(command.IdentityId, command.Email, command.CountryId), cancellationToken);
+        }
+             
     }
 }
