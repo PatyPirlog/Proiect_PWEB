@@ -1,31 +1,22 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link, useNavigate } from "react-router-dom";
 import jwt from "jwt-decode";
-import { authSettings } from "../AuthSettings";
 
 const Header = () => {
-	const { logout, user, getAccessTokenSilently, isAuthenticated } =
-		useAuth0();
+	const { logout, getAccessTokenSilently } = useAuth0();
 	const [permissions, setPermissions] = useState("");
-	const navigate = useNavigate();
 
 	const getPermissions = useCallback(async () => {
 		const accessToken = await getAccessTokenSilently();
 		const data = jwt(accessToken);
 		setPermissions(data.permissions);
-		console.log(data);
 	}, [getAccessTokenSilently]);
 
 	useEffect(() => {
-	  getPermissions();
-	  // if (permissions[0] === "admin")
-	  //   navigate('/categories');
-
+		getPermissions();
 	}, []);
 
-	console.log(permissions);
 	return (
 		<>
 			<Navbar bg="dark" variant="dark">
@@ -56,16 +47,18 @@ const Header = () => {
 								</Nav.Link>
 							</>
 						)}
+						<Nav.Link
+							className="signout"
+							href="/"
+							onClick={() => {
+								logout({
+									returnTo: window.location.origin,
+								});
+							}}
+						>
+							Signout
+						</Nav.Link>
 					</Nav>
-					<Link
-						className="signout"
-						to="/"
-						onClick={() => {
-							logout({ returnTo: window.location.origin });
-						}}
-					>
-						Signout
-					</Link>
 				</Container>
 			</Navbar>
 		</>

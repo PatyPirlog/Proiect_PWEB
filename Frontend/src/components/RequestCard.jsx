@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import { Card, Badge, Button } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 import jwt from "jwt-decode";
+import "../styling/global.css";
 
 const RequestCard = ({
 	id,
@@ -9,9 +10,10 @@ const RequestCard = ({
 	countryName,
 	title,
 	description,
-	userName,
+	name,
+	surname,
 	userEmail,
-	userPhone,
+	phone,
 	address,
 	buttonName,
 	onAction,
@@ -24,7 +26,6 @@ const RequestCard = ({
 		const accessToken = await getAccessTokenSilently();
 		const data = jwt(accessToken);
 		setPermissions(data.permissions);
-		console.log(data);
 	}, [getAccessTokenSilently]);
 
 	useEffect(() => {
@@ -32,29 +33,29 @@ const RequestCard = ({
 	}, []);
 
 	return (
-		<Card style={{ width: "100%" }}>
+		<Card style={{ width: "100%" }} className="mb-3 mt-3 request-card">
 			<Card.Body>
 				<div className="d-flex justify-content-between">
-					<div>
-						<Card.Title className="mb-2 text-muted">
+					<div className="mr-5">
+						<Card.Title className="mb-2 text-muted subtitle">
 							{title}
 						</Card.Title>
-						<Card.Text className="mt-1 mb-1">
-							<Badge pill bg="info">
+						<Card.Text className="mt-1 mb-2 text">
+							<Badge pill className="badge">
 								{categoryName}
 							</Badge>{" "}
-							<Badge pill bg="info">
+							<Badge pill className="badge">
 								{countryName}
 							</Badge>
 						</Card.Text>
-						<Card.Text className="mt-1 mb-1">
+						<Card.Text className="mt-1 mb-1 text">
 							{" "}
 							Description: {description}{" "}
 						</Card.Text>
-						{userName && (
+						{name && surname && (
 							<Card.Text className="mt-1 mb-1">
 								{" "}
-								Name: {userName}{" "}
+								Name: {name + " " + surname}{" "}
 							</Card.Text>
 						)}
 						{userEmail && (
@@ -63,10 +64,10 @@ const RequestCard = ({
 								Email: {userEmail}{" "}
 							</Card.Text>
 						)}
-						{userPhone && (
+						{phone && (
 							<Card.Text className="mt-1 mb-1">
 								{" "}
-								Phone: {userPhone}{" "}
+								Phone: {phone}{" "}
 							</Card.Text>
 						)}
 						{address && (
@@ -80,9 +81,13 @@ const RequestCard = ({
 					<div className="d-flex align-items-center">
 						{permissions[0] !== "admin" && (
 							<Button
-								variant="outline-info"
-								size="md"
 								onClick={onAction}
+								className={
+									buttonName === "Help"
+										? "button button-info"
+										: "button button-delete"
+								}
+								id="button-delete-request"
 							>
 								{buttonName}
 							</Button>
