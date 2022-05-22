@@ -89,9 +89,9 @@ namespace Proiect_PWEB.Api.Features.Request
             return Ok(request);
         }
 
-        [HttpDelete("deleteRequest")]
+        [HttpPost("deleteRequest")]
         [Authorize]
-        public async Task<IActionResult> DeleteRequestAsync([FromBody] Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteRequestAsync([FromBody] DeleteRequestCommand command, CancellationToken cancellationToken)
         {
             var identityId = User.GetUserIdentityId();
 
@@ -99,7 +99,7 @@ namespace Proiect_PWEB.Api.Features.Request
             {
                 return Unauthorized();
             }
-            await deleteRequestCommandHandler.HandleAsync(id, cancellationToken);
+            await deleteRequestCommandHandler.HandleAsync(command.Id, cancellationToken);
 
             return NoContent();
         }

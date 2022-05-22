@@ -59,6 +59,12 @@ namespace Proiect_PWEB.Api.Features.Subscription
         [Authorize]
         public async Task<IActionResult> AddMultipleSubscriptions([FromBody] List<AddSubscriptionCommand> commands, CancellationToken cancellationToken)
         {
+            var identityId = User.GetUserIdentityId();
+
+            if (identityId == null)
+            {
+                return Unauthorized();
+            }
             if (commands == null)
                 return StatusCode((int)HttpStatusCode.BadRequest);
 
@@ -69,9 +75,15 @@ namespace Proiect_PWEB.Api.Features.Subscription
 
         [HttpPost("deleteSubscription")]
         [Authorize]
-        public async Task<IActionResult> DeleteSubscription(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteSubscription([FromBody] DeleteSubscriptionCommand command, CancellationToken cancellationToken)
         {
-            await deleteSubscriptionHandler.HandleAsync(id, cancellationToken);
+            var identityId = User.GetUserIdentityId();
+
+            if (identityId == null)
+            {
+                return Unauthorized();
+            }
+            await deleteSubscriptionHandler.HandleAsync(command.Id, cancellationToken);
 
             return StatusCode((int)HttpStatusCode.OK);
         }
